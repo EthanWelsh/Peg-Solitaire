@@ -130,7 +130,7 @@ class Board:
         """
         Checks to see if a given r, c is out of bounds
         """
-        return min(r, c) < 0 or max(r, c) > self.size
+        return min(r, c) < 0 or max(r, c) >= self.size
 
     def _free_positions(self):
         """

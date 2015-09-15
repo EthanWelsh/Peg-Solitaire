@@ -13,6 +13,7 @@ because (for the time being) simplicity mattered most to me.
 
 Sample Output
 -------------
+```
   0 1 2 3 4
 0 o * * * *
 1 * * * * .
@@ -22,7 +23,7 @@ Sample Output
 
 0:	(0, 2) --> (0, 0)
 1:	(2, 0) --> (0, 0)
-Please select a move (or 'q' to quit): **1**
+Please select a move (or 'q' to quit): 1
 
   0 1 2 3 4
 0 * * * * *
@@ -35,7 +36,7 @@ Please select a move (or 'q' to quit): **1**
 1:	(0, 2) --> (2, 0)
 2:	(2, 2) --> (2, 0)
 3:	(4, 0) --> (2, 0)
-Please select a move (or 'q' to quit): **2**
+Please select a move (or 'q' to quit): 2
 
   0 1 2 3 4
 0 * * * * *
@@ -51,7 +52,7 @@ Please select a move (or 'q' to quit): **2**
 4:	(0, 2) --> (2, 2)
 5:	(0, 4) --> (2, 2)
 6:	(4, 0) --> (2, 2)
-Please select a move (or 'q' to quit): **6**
+Please select a move (or 'q' to quit): 6
 
   0 1 2 3 4
 0 * * * * *
@@ -66,7 +67,7 @@ Please select a move (or 'q' to quit): **6**
 3:	(0, 3) --> (2, 1)
 4:	(1, 3) --> (3, 1)
 5:	(2, 0) --> (4, 0)
-Please select a move (or 'q' to quit): **4**
+Please select a move (or 'q' to quit): 4
 
   0 1 2 3 4
 0 * * * * *
@@ -82,7 +83,7 @@ Please select a move (or 'q' to quit): **4**
 4:	(0, 3) --> (2, 1)
 5:	(0, 2) --> (2, 2)
 6:	(2, 0) --> (4, 0)
-Please select a move (or 'q' to quit): **5**
+Please select a move (or 'q' to quit): 5
 
   0 1 2 3 4
 0 * * o * *
@@ -99,7 +100,7 @@ Please select a move (or 'q' to quit): **5**
 5:	(0, 1) --> (2, 1)
 6:	(2, 0) --> (4, 0)
 7:	(2, 2) --> (4, 0)
-Please select a move (or 'q' to quit): **4**
+Please select a move (or 'q' to quit): 4
 
   0 1 2 3 4
 0 * * o * *
@@ -115,7 +116,7 @@ Please select a move (or 'q' to quit): **4**
 4:	(0, 1) --> (2, 1)
 5:	(0, 4) --> (2, 2)
 6:	(2, 0) --> (4, 0)
-Please select a move (or 'q' to quit): **5**
+Please select a move (or 'q' to quit): 5
 
   0 1 2 3 4
 0 * * o * o
@@ -129,7 +130,7 @@ Please select a move (or 'q' to quit): **5**
 2:	(3, 0) --> (1, 0)
 3:	(0, 1) --> (2, 1)
 4:	(2, 0) --> (4, 0)
-Please select a move (or 'q' to quit): **1**
+Please select a move (or 'q' to quit): 1
 
   0 1 2 3 4
 0 o o * * o
@@ -142,7 +143,7 @@ Please select a move (or 'q' to quit): **1**
 1:	(0, 2) --> (0, 4)
 2:	(3, 0) --> (1, 0)
 3:	(2, 0) --> (4, 0)
-Please select a move (or 'q' to quit): **0**
+Please select a move (or 'q' to quit): 0
 
   0 1 2 3 4
 0 o * o o o
@@ -155,7 +156,7 @@ Please select a move (or 'q' to quit): **0**
 1:	(3, 0) --> (1, 0)
 2:	(0, 1) --> (2, 1)
 3:	(2, 0) --> (4, 0)
-Please select a move (or 'q' to quit): **1**
+Please select a move (or 'q' to quit): 1
 
   0 1 2 3 4
 0 o * o o o
@@ -166,7 +167,7 @@ Please select a move (or 'q' to quit): **1**
 
 0:	(1, 0) --> (1, 2)
 1:	(0, 1) --> (2, 1)
-Please select a move (or 'q' to quit): **1**
+Please select a move (or 'q' to quit): 1
 
   0 1 2 3 4
 0 o o o o o
@@ -176,7 +177,7 @@ Please select a move (or 'q' to quit): **1**
 4 o . . . .
 
 0:	(2, 2) --> (2, 0)
-Please select a move (or 'q' to quit): **0**
+Please select a move (or 'q' to quit): 0
 
   0 1 2 3 4
 0 o o o o o
@@ -187,7 +188,7 @@ Please select a move (or 'q' to quit): **0**
 
 0:	(2, 0) --> (0, 0)
 1:	(1, 0) --> (3, 0)
-Please select a move (or 'q' to quit): **0**
+Please select a move (or 'q' to quit): 0
 
 Congratulations! You won!
   0 1 2 3 4
@@ -196,3 +197,4 @@ Congratulations! You won!
 2 o o o . .
 3 o o . . .
 4 o . . . .
+```

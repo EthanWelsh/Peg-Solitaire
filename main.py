@@ -6,14 +6,17 @@ class Board:
         self.board = board
         self.size = board.shape[0]
 
-        if directions == 'all':
-            self.directions = ['n', 'ne', 'e', 'se', 's', 'sw', 'w', 'nw']
-        elif directions == 'ortho:':
-            self.directions = ['n', 'e', 's', 'w']
-        elif directions == 'swne':
-            self.directions = ['n', 'ne', 'e', 's', 'sw', 'w']
+        if type(directions) is str:
+            if directions == 'all':
+                self.directions = ['n', 'ne', 'e', 'se', 's', 'sw', 'w', 'nw']
+            elif directions == 'ortho:':
+                self.directions = ['n', 'e', 's', 'w']
+            elif directions == 'swne':
+                self.directions = ['n', 'ne', 'e', 's', 'sw', 'w']
+            else:
+                assert False
         else:
-            assert False
+            self.directions = directions
 
     @classmethod
     def board_from_file(cls, file_name):
@@ -27,6 +30,11 @@ class Board:
 
         board_matrix = np.array([[spot for spot in line.strip().split(' ')] for line in matrix_lines])
         return Board(board=board_matrix, directions=directions.strip())
+
+    @classmethod
+    def board_from_board(cls, other):
+        new_board = Board(np.copy(other.board), other.directions)
+        return new_board
 
     def check_peg(self, start_position, direction):
         return self._get_spot(start_position, direction) == '*'
@@ -56,20 +64,35 @@ class Board:
         assert (self.board[destination] == 'o')
         assert ((source, destination) in self.get_possible_moves())
 
-        new_board = np.copy(self.board)
+        new_board = Board.board_from_board(self)
 
         # Calculate the coordinates of the pixel that is between the source and destination
         hop = tuple(np.divide(np.add(source, destination), (2, 2)))
         assert self.board[hop] == '*'
 
-        new_board[source] = 'o'
-        new_board[destination] = '*'
-        new_board[hop] = 'o'
+        new_board.board[source] = 'o'
+        new_board.board[destination] = '*'
+        new_board.board[hop] = 'o'
 
         if apply:
-            self.board = new_board
+            self.board = new_board.board
 
         return new_board
+
+    def is_goal(self):
+        """
+        Checks if the current board is in a goal state (IE there is only one pin left)
+        :return: board_is_goal_state
+        """
+        pins = 0
+
+        for r in range(self.size):
+            for c in range(self.size):
+                pins += 1
+
+                if pins > 1:
+                    return False
+        return pins == 1
 
     @staticmethod
     def _adjusts_coords_to_direction(start_position, direction):
@@ -149,14 +172,31 @@ class Board:
 
 def main():
     board = Board.board_from_file('input_files/test.txt')
-    move = board.get_possible_moves()[0]
-    source, destination = move
 
-    board.make_move(source, destination, apply=True)
-    print("{} > {} \n{}".format(source, destination, board))
+    # Game loop
+    while not board.is_goal():
+        moves = board.get_possible_moves()
 
+        print()
+        print(board)
 
+        # Print out a list of all possible moves
+        for move_num, move in enumerate(moves):
+            source, destination = move
+            print('{}:\t{} --> {}'.format(move_num, source, destination))
 
+        # Get input from the user as to which move to take next
+        user_input = None
+        while user_input is None:
+            prompt = int(input("Please select a move (or 'q' to quit): "))
+
+            if prompt == 'q':
+                return 0
+            if prompt in range(len(moves)):
+                user_input = prompt
+                break
+
+        board.make_move(*moves[user_input], apply=True)
 
 
 if __name__ == '__main__':

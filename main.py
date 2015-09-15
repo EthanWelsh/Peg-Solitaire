@@ -6,11 +6,17 @@ class Board:
         self.board = board
         self.size = board.shape[0]
 
+    def check_peg(self, start_position, direction):
+        return self._get_spot(start_position, direction) == '*'
+
     def check_free(self, start_position, direction):
+        return self._get_spot(start_position, direction) == 'o'
+
+    def _get_spot(self, start_position, direction):
         x, y = start_position
 
         if self._out_of_bounds(y, x):
-            return False
+            return '.'
 
         if 'n' in direction:
             y -= 1
@@ -21,7 +27,10 @@ class Board:
         if 'w' in direction:
             x -= 1
 
-        return not self._out_of_bounds(y, x) and self.board[y, x] == 'o'
+        if self._out_of_bounds(y, x):
+            return '.'
+
+        return self.board[y, x]
 
     def _out_of_bounds(self, x, y):
         return min(x, y) < 0 or max(x, y) > self.size

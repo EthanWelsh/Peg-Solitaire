@@ -36,12 +36,6 @@ class Board:
         new_board = Board(np.copy(other.board), other.directions)
         return new_board
 
-    def check_peg(self, start_position, direction):
-        return self._get_spot(start_position, direction) == '*'
-
-    def check_free(self, start_position, direction):
-        return self._get_spot(start_position, direction) == 'o'
-
     def get_possible_moves(self):
         """
         :returns: a list of lists of tuples of tuples of possible moves from source > destination
@@ -79,6 +73,12 @@ class Board:
 
         return new_board
 
+    def check_peg(self, start_position, direction):
+        return self._get_spot(start_position, direction) == '*'
+
+    def check_free(self, start_position, direction):
+        return self._get_spot(start_position, direction) == 'o'
+
     def is_goal(self):
         """
         Checks if the current board is in a goal state (IE there is only one pin left)
@@ -111,6 +111,33 @@ class Board:
 
         return r, c
 
+    def _possible_jumps_into_empty(self, empty_coord):
+        """
+        Given the coordinate of an empty space, will return the locations of all the pegs that could jump into that cell
+        :param empty_coord: the coordinate of the empty spot that you'd like to check from
+        """
+        assert self.board[empty_coord] == 'o'
+        possible_jumps = []
+
+        for direction in self.directions:
+            if self.check_peg(empty_coord, direction) and self.check_peg(empty_coord, direction * 2):
+                possible_jumps.append(self._adjusts_coords_to_direction(empty_coord, direction * 2))
+
+        return possible_jumps
+
+    def _free_positions(self):
+        """
+        Looks through the matrix and returns a list of empty spaces.
+        :returns a list of (r, c) coordinates where blank spots can be found on the board.
+        """
+        positions = []
+        for r in range(self.size):
+            for c in range(self.size):
+                if self.board[r, c] == 'o':
+                    positions.append((r, c))
+
+        return positions
+
     def _get_spot(self, start_position, direction):
         """
         :param start_position: The coordinates that you'd like to start from
@@ -132,33 +159,6 @@ class Board:
         Checks to see if a given r, c is out of bounds
         """
         return min(r, c) < 0 or max(r, c) >= self.size
-
-    def _free_positions(self):
-        """
-        Looks through the matrix and returns a list of empty spaces.
-        :returns a list of (r, c) coordinates where blank spots can be found on the board.
-        """
-        positions = []
-        for r in range(self.size):
-            for c in range(self.size):
-                if self.board[r, c] == 'o':
-                    positions.append((r, c))
-
-        return positions
-
-    def _possible_jumps_into_empty(self, empty_coord):
-        """
-        Given the coordinate of an empty space, will return the locations of all the pegs that could jump into that cell
-        :param empty_coord: the coordinate of the empty spot that you'd like to check from
-        """
-        assert self.board[empty_coord] == 'o'
-        possible_jumps = []
-
-        for direction in self.directions:
-            if self.check_peg(empty_coord, direction) and self.check_peg(empty_coord, direction * 2):
-                possible_jumps.append(self._adjusts_coords_to_direction(empty_coord, direction * 2))
-
-        return possible_jumps
 
     def __str__(self):
         ret = '  '

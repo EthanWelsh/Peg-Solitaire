@@ -21,6 +21,16 @@ class Board:
     def check_free(self, start_position, direction):
         return self._get_spot(start_position, direction) == 'o'
 
+    def get_possible_moves(self):
+        """
+        :returns: a list of lists of tuples of tuples of possible moves from source > destination
+        """
+        moves = []
+        for free_position in self._free_positions():
+            jumps = [(jump, free_position) for jump in self._possible_jumps_into_empty(free_position)]
+            moves.extend(jumps)
+        return moves
+
     def _move_direction(self, start_position, direction):
         """
         :param start_position: The coordinates that you'd like to start from
@@ -64,7 +74,7 @@ class Board:
         """
         return min(r, c) < 0 or max(r, c) > self.size
 
-    def _get_blank_spots(self):
+    def _free_positions(self):
         """
         Looks through the matrix and returns a list of empty spaces.
         :returns a list of (r, c) coordinates where blank spots can be found on the board.

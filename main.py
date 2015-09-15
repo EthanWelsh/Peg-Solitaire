@@ -88,7 +88,8 @@ class Board:
 
         for r in range(self.size):
             for c in range(self.size):
-                pins += 1
+                if self.board[r, c] == '*':
+                    pins += 1
 
                 if pins > 1:
                     return False
@@ -174,7 +175,7 @@ class Board:
 
 
 def main():
-    board = Board.board_from_file('input_files/test.txt')
+    board = Board.board_from_file('input_files/sample03.txt')
 
     # Game loop
     while not board.is_goal():
@@ -183,7 +184,6 @@ def main():
         print('\n{}'.format(board))
 
         # Print out a list of all possible moves
-
         if len(moves) == 0:
             print("You lost! Sorry")
             return 0
@@ -195,17 +195,18 @@ def main():
         # Get input from the user as to which move to take next
         user_input = None
         while user_input is None:
-            prompt = int(input("Please select a move (or 'q' to quit): "))
+            prompt = input("Please select a move (or 'q' to quit): ")
 
             if prompt == 'q':
                 return 0
-            if prompt in range(len(moves)):
-                user_input = prompt
+            if int(prompt) in range(len(moves)):
+                user_input = int(prompt)
                 break
 
         board.make_move(*moves[user_input], apply=True)
 
-    print('Congratulations! You won!')
+    print('\nCongratulations! You won!')
+    print(board)
 
 
 if __name__ == '__main__':

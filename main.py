@@ -35,6 +35,15 @@ class Board:
     def _out_of_bounds(self, r, c):
         return min(r, c) < 0 or max(r, c) > self.size
 
+    def get_blank_spots(self):
+        positions = []
+        for r in range(self.size):
+            for c in range(self.size):
+                if self.board[r, c] == 'o':
+                    positions.append((r, c))
+
+        return positions
+
 
 def read_board_from_file(file_name):
     """
@@ -52,6 +61,7 @@ def read_board_from_file(file_name):
 def main():
     matrix, directions = read_board_from_file('input_files/test.txt')
     board = Board(matrix)
+    print(board.get_blank_spots())
 
 
 if __name__ == '__main__':

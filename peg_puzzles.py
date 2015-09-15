@@ -10,7 +10,7 @@ class Board:
         if type(directions) is str:
             if directions == 'all':
                 self.directions = ['n', 'ne', 'e', 'se', 's', 'sw', 'w', 'nw']
-            elif directions == 'ortho:':
+            elif directions == 'ortho':
                 self.directions = ['n', 'e', 's', 'w']
             elif directions == 'swne':
                 self.directions = ['n', 'ne', 'e', 's', 'sw', 'w']

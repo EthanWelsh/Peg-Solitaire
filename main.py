@@ -15,6 +15,19 @@ class Board:
         else:
             assert False
 
+    @classmethod
+    def board_from_file(cls, file_name):
+        """
+        :param file_name:
+        :return: board_matrix: numpy character matrix
+        :return: directions: string enumerating the directions travel is allowed
+        """
+        with open(file_name, 'r') as peg_file:
+            directions, _, *matrix_lines = peg_file.readlines()
+
+        board_matrix = np.array([[spot for spot in line.strip().split(' ')] for line in matrix_lines])
+        return Board(board=board_matrix, directions=directions.strip())
+
     def check_peg(self, start_position, direction):
         return self._get_spot(start_position, direction) == '*'
 
@@ -134,27 +147,16 @@ class Board:
         return ret
 
 
-def read_board_from_file(file_name):
-    """
-    :param file_name:
-    :return: board_matrix: numpy character matrix
-    :return: directions: string enumerating the directions travel is allowed
-    """
-    with open(file_name, 'r') as peg_file:
-        directions, _, *matrix_lines = peg_file.readlines()
-
-    board_matrix = np.array([[spot for spot in line.strip().split(' ')] for line in matrix_lines])
-    return board_matrix, directions.strip()
-
-
 def main():
-    matrix, directions = read_board_from_file('input_files/test.txt')
-    board = Board(matrix, directions)
+    board = Board.board_from_file('input_files/test.txt')
     move = board.get_possible_moves()[0]
     source, destination = move
 
     board.make_move(source, destination, apply=True)
     print("{} > {} \n{}".format(source, destination, board))
+
+
+
 
 
 if __name__ == '__main__':

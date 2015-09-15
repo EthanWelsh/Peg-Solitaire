@@ -160,10 +160,13 @@ class Board:
         return possible_jumps
 
     def __str__(self):
-
-        ret = ''
+        ret = '  '
+        for i in range(self.size):
+            ret += str(i) + ' '
+        ret += '\n'
 
         for r in range(self.size):
+            ret += str(r) + ' '
             for c in range(self.size):
                 ret += '{} '.format(self.board[r, c])
             ret += '\n'
@@ -201,6 +204,8 @@ def main():
                 break
 
         board.make_move(*moves[user_input], apply=True)
+
+    print('Congratulations! You won!')
 
 
 if __name__ == '__main__':

@@ -31,7 +31,35 @@ class Board:
             moves.extend(jumps)
         return moves
 
-    def _move_direction(self, start_position, direction):
+    def make_move(self, source, destination, apply=False):
+        """
+        :param source: The coordinate of the pin that you'd like to move
+        :param destination: The coordinate of the empty position that you'd like to move the pin into
+        :param apply: If you'd like to apply the move to the current board and change its matrix accordingly
+        :return: new_board: a new board with the move applied
+        """
+        assert (not self._out_of_bounds(*source) and not self._out_of_bounds(*destination))
+        assert (self.board[source] == '*')
+        assert (self.board[destination] == 'o')
+        assert ((source, destination) in self.get_possible_moves())
+
+        new_board = np.copy(self.board)
+
+        # Calculate the coordinates of the pixel that is between the source and destination
+        hop = tuple(np.divide(np.add(source, destination), (2, 2)))
+        assert self.board[hop] == '*'
+
+        new_board[source] = 'o'
+        new_board[destination] = '*'
+        new_board[hop] = 'o'
+
+        if apply:
+            self.board = new_board
+
+        return new_board
+
+    @staticmethod
+    def _adjusts_coords_to_direction(start_position, direction):
         """
         :param start_position: The coordinates that you'd like to start from
         :param direction: The direction that you'd like to look in
@@ -39,14 +67,10 @@ class Board:
         """
         r, c = start_position
 
-        if 'n' in direction:
-            r -= 1 * direction.count('n')
-        if 'e' in direction:
-            c += 1 * direction.count('e')
-        if 's' in direction:
-            r += 1 * direction.count('s')
-        if 'w' in direction:
-            c -= 1 * direction.count('w')
+        r -= 1 * direction.count('n')
+        r += 1 * direction.count('s')
+        c += 1 * direction.count('e')
+        c -= 1 * direction.count('w')
 
         return r, c
 
@@ -57,12 +81,10 @@ class Board:
         :return: the character at that position in the board
         """
         r, c = start_position
-
         if self._out_of_bounds(r, c):
             return '.'
 
-        r, c = self._move_direction(start_position, direction)
-
+        r, c = self._adjusts_coords_to_direction(start_position, direction)
         if self._out_of_bounds(r, c):
             return '.'
 
@@ -97,9 +119,19 @@ class Board:
 
         for direction in self.directions:
             if self.check_peg(empty_coord, direction) and self.check_peg(empty_coord, direction * 2):
-                possible_jumps.append(self._move_direction(empty_coord, direction * 2))
+                possible_jumps.append(self._adjusts_coords_to_direction(empty_coord, direction * 2))
 
         return possible_jumps
+
+    def __str__(self):
+
+        ret = ''
+
+        for r in range(self.size):
+            for c in range(self.size):
+                ret += '{} '.format(self.board[r, c])
+            ret += '\n'
+        return ret
 
 
 def read_board_from_file(file_name):
@@ -118,6 +150,11 @@ def read_board_from_file(file_name):
 def main():
     matrix, directions = read_board_from_file('input_files/test.txt')
     board = Board(matrix, directions)
+    move = board.get_possible_moves()[0]
+    source, destination = move
+
+    board.make_move(source, destination, apply=True)
+    print("{} > {} \n{}".format(source, destination, board))
 
 
 if __name__ == '__main__':

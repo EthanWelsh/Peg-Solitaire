@@ -177,10 +177,14 @@ def main():
     while not board.is_goal():
         moves = board.get_possible_moves()
 
-        print()
-        print(board)
+        print('\n{}'.format(board))
 
         # Print out a list of all possible moves
+
+        if len(moves) == 0:
+            print("You lost! Sorry")
+            return 0
+
         for move_num, move in enumerate(moves):
             source, destination = move
             print('{}:\t{} --> {}'.format(move_num, source, destination))

@@ -1,4 +1,5 @@
 import numpy as np
+import sys
 
 
 class Board:
@@ -175,7 +176,7 @@ class Board:
 
 
 def main():
-    board = Board.board_from_file('input_files/sample03.txt')
+    board = Board.board_from_file(sys.argv[1])
 
     # Game loop
     while not board.is_goal():

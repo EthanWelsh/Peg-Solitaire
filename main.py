@@ -13,27 +13,27 @@ class Board:
         return self._get_spot(start_position, direction) == 'o'
 
     def _get_spot(self, start_position, direction):
-        x, y = start_position
+        r, c = start_position
 
-        if self._out_of_bounds(y, x):
+        if self._out_of_bounds(r, c):
             return '.'
 
         if 'n' in direction:
-            y -= 1
+            r -= 1
         if 'e' in direction:
-            x += 1
+            c += 1
         if 's' in direction:
-            y += 1
+            r += 1
         if 'w' in direction:
-            x -= 1
+            c -= 1
 
-        if self._out_of_bounds(y, x):
+        if self._out_of_bounds(r, c):
             return '.'
 
-        return self.board[y, x]
+        return self.board[r, c]
 
-    def _out_of_bounds(self, x, y):
-        return min(x, y) < 0 or max(x, y) > self.size
+    def _out_of_bounds(self, r, c):
+        return min(r, c) < 0 or max(r, c) > self.size
 
 
 def read_board_from_file(file_name):

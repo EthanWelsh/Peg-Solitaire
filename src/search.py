@@ -20,35 +20,36 @@ class DepthFirstSearch:
 
 
 class BreadthFirstSearch:
-    def search(self):
-        pass
+    def __init__(self, start):
+        self.start = start
 
-    def get_next_from_frontier(self):
-        pass
+    def search(self):
+        queue = [(self.start, [])]
+
+        while queue:
+            (state, path) = queue.pop(0)
+            for move, board in state.successors():
+                if board.is_goal():
+                    yield path + [move]
+                else:
+                    queue.append((board, path + [move]))
 
 
 class AStar:
     def search(self):
         pass
 
-    def get_next_from_frontier(self):
-        pass
-
-
 class IterativeDeepeningAStar:
     def search(self):
         pass
 
-    def get_next_from_frontier(self):
-        pass
-
-
 def main():
 
     start_board = Board.board_from_file(sys.argv[1])
-    dfs = DepthFirstSearch(start_board)
-    for path in dfs.search():
-        print(path)
+
+    bfs = BreadthFirstSearch(start_board)
+    for board in bfs.search():
+        print(board)
 
 
 if __name__ == '__main__':

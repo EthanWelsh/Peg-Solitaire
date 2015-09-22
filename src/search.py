@@ -1,4 +1,7 @@
+from queue import PriorityQueue
 import sys
+import heapq
+
 from src.board import Board
 
 
@@ -36,8 +39,21 @@ class BreadthFirstSearch:
 
 
 class AStar:
+
+    def __init__(self, start):
+        self.start = start
+
     def search(self):
-        pass
+        pq = PriorityQueue()
+        pq.put((self.start, []))
+        while not pq.empty():
+            state, path = pq.get()
+
+            if state.is_goal():
+                yield path
+            for move, board in state.successors():
+                pq.put((board, path + [move]))
+
 
 class IterativeDeepeningAStar:
     def search(self):
@@ -45,12 +61,15 @@ class IterativeDeepeningAStar:
 
 def main():
 
+
     start_board = Board.board_from_file(sys.argv[1])
 
-    bfs = BreadthFirstSearch(start_board)
-    for board in bfs.search():
-        print(board)
+    x = lambda x: 1
+    start_board.heuristic = x
+    astar = AStar(start_board)
 
+    for b in astar.search():
+        print(b)
 
 if __name__ == '__main__':
     main()

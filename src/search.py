@@ -7,5 +7,5 @@ class DFS:
 class IDDFS:
     pass
 
-class ASTAR:
+class IDASTAR:
     pass

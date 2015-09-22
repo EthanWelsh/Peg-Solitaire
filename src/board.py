@@ -47,7 +47,7 @@ class Board:
             moves.extend(jumps)
         return moves
 
-    def make_move(self, source, destination, apply=False):
+    def make_move(self, source, destination):
         """
         :param source: The coordinate of the pin that you'd like to move
         :param destination: The coordinate of the empty position that you'd like to move the pin into
@@ -68,9 +68,6 @@ class Board:
         new_board.board[source] = 'o'
         new_board.board[destination] = '*'
         new_board.board[hop] = 'o'
-
-        if apply:
-            self.board = new_board.board
 
         return new_board
 
@@ -105,10 +102,10 @@ class Board:
         """
         r, c = start_position
 
-        r -= 1 * direction.count('n')
-        r += 1 * direction.count('s')
-        c += 1 * direction.count('e')
-        c -= 1 * direction.count('w')
+        r -= direction.count('n')
+        r += direction.count('s')
+        c += direction.count('e')
+        c -= direction.count('w')
 
         return r, c
 
@@ -204,7 +201,7 @@ def main():
                 user_input = int(prompt)
                 break
 
-        board.make_move(*moves[user_input], apply=True)
+        board = board.make_move(*moves[user_input])
 
     print('\nCongratulations! You won!')
     print(board)

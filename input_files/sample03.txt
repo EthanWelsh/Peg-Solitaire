@@ -3,5 +3,5 @@ swne
 o o o o *
 o o o * .
 o o o . .
-o o . . .
-o . . . .
+o * . . .
+o * . . .

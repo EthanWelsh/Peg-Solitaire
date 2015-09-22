@@ -1,33 +1,29 @@
-from abc import ABCMeta, abstractmethod
 import sys
 from src.board import Board
 
 
-class Search:
-    __metaclass__ = ABCMeta
+class DepthFirstSearch:
 
-    def __init__(self):
-        self.frontier = []
+    def __init__(self, start):
+        self.start = start
 
-    def add_to_frontier(self, board):
-        self.add_to_frontier(board)
-
-    def in_frontier(self, board):
-        return board in self.frontier
-
-
-class DepthFirstSearch(Search):
-
-    def search(self, state, path):
+    def search(self, state=None, path=None):
+        if not state and not path:
+            state = self.start
+            path = []
 
         if state.is_goal():
-            print(path)
             return path
 
         for move, board in state.successors():
-            self.search(board, path + [move])
+            child_path = self.search(board, path + [move])
+            if child_path is not None:
+                return child_path
 
-class BreadthFirstSearch(Search):
+        return None
+
+
+class BreadthFirstSearch:
     def search(self):
         pass
 
@@ -35,7 +31,7 @@ class BreadthFirstSearch(Search):
         pass
 
 
-class AStar(Search):
+class AStar:
     def search(self):
         pass
 
@@ -43,7 +39,7 @@ class AStar(Search):
         pass
 
 
-class IterativeDeepeningAStar(Search):
+class IterativeDeepeningAStar:
     def search(self):
         pass
 
@@ -54,8 +50,8 @@ class IterativeDeepeningAStar(Search):
 def main():
 
     start_board = Board.board_from_file(sys.argv[1])
-    dfs = DepthFirstSearch()
-    dfs.search(start_board, [])
+    dfs = DepthFirstSearch(start_board)
+    print(dfs.search())
 
 
 if __name__ == '__main__':

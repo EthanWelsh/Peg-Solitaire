@@ -38,11 +38,10 @@ class Board:
         return new_board
 
     def successors(self):
-
-        moves = self._get_possible_moves()
+        moves = self.get_possible_moves()
         successors = []
         for move in moves:
-            successors.append(self._make_move(*move))
+            successors.append((move, self.make_move(*move)))
 
         return successors
 
@@ -68,7 +67,7 @@ class Board:
                     return False
         return pins == 1
 
-    def _get_possible_moves(self):
+    def get_possible_moves(self):
         """
         :returns: a list of lists of tuples of tuples of possible moves from source > destination
         """
@@ -78,7 +77,7 @@ class Board:
             moves.extend(jumps)
         return moves
 
-    def _make_move(self, source, destination):
+    def make_move(self, source, destination):
         """
         :param source: The coordinate of the pin that you'd like to move
         :param destination: The coordinate of the empty position that you'd like to move the pin into
@@ -88,7 +87,7 @@ class Board:
         assert (not self._out_of_bounds(*source) and not self._out_of_bounds(*destination))
         assert (self.board[source] == '*')
         assert (self.board[destination] == 'o')
-        assert ((source, destination) in self._get_possible_moves())
+        assert ((source, destination) in self.get_possible_moves())
 
         new_board = Board.board_from_board(self)
 
@@ -186,7 +185,7 @@ def main():
 
     # Game loop
     while not board.is_goal():
-        moves = board._get_possible_moves()
+        moves = board.get_possible_moves()
 
         print('\n{}'.format(board))
 
@@ -210,7 +209,7 @@ def main():
                 user_input = int(prompt)
                 break
 
-        board = board._make_move(*moves[user_input])
+        board = board.make_move(*moves[user_input])
 
     print('\nCongratulations! You won!')
     print(board)

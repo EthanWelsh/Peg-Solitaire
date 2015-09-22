@@ -13,14 +13,10 @@ class DepthFirstSearch:
             path = []
 
         if state.is_goal():
-            return path
+            yield path
 
         for move, board in state.successors():
-            child_path = self.search(board, path + [move])
-            if child_path is not None:
-                return child_path
-
-        return None
+            yield from self.search(board, path + [move])
 
 
 class BreadthFirstSearch:
@@ -51,7 +47,8 @@ def main():
 
     start_board = Board.board_from_file(sys.argv[1])
     dfs = DepthFirstSearch(start_board)
-    print(dfs.search())
+    for path in dfs.search():
+        print(path)
 
 
 if __name__ == '__main__':

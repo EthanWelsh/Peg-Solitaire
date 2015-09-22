@@ -39,11 +39,8 @@ class Board:
 
     def successors(self):
         moves = self.get_possible_moves()
-        successors = []
         for move in moves:
-            successors.append((move, self.make_move(*move)))
-
-        return successors
+            yield (move, self.make_move(*move))
 
     def check_peg(self, start_position, direction):
         return self._get_spot(start_position, direction) == '*'
@@ -71,11 +68,8 @@ class Board:
         """
         :returns: a list of lists of tuples of tuples of possible moves from source > destination
         """
-        moves = []
         for free_position in self._free_positions():
-            jumps = [(jump, free_position) for jump in self._possible_jumps_into_empty(free_position)]
-            moves.extend(jumps)
-        return moves
+            yield from [(jump, free_position) for jump in self._possible_jumps_into_empty(free_position)]
 
     def make_move(self, source, destination):
         """
@@ -123,26 +117,20 @@ class Board:
         :param empty_coord: the coordinate of the empty spot that you'd like to check from
         """
         assert self.board[empty_coord] == 'o'
-        possible_jumps = []
 
         for direction in self.directions:
             if self.check_peg(empty_coord, direction) and self.check_peg(empty_coord, direction * 2):
-                possible_jumps.append(self._adjusts_coords_to_direction(empty_coord, direction * 2))
-
-        return possible_jumps
+                yield self._adjusts_coords_to_direction(empty_coord, direction * 2)
 
     def _free_positions(self):
         """
         Looks through the matrix and returns a list of empty spaces.
         :returns a list of (r, c) coordinates where blank spots can be found on the board.
         """
-        positions = []
         for r in range(self.size):
             for c in range(self.size):
                 if self.board[r, c] == 'o':
-                    positions.append((r, c))
-
-        return positions
+                    yield (r, c)
 
     def _get_spot(self, start_position, direction):
         """

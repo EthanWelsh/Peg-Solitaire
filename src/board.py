@@ -37,39 +37,14 @@ class Board:
         new_board = Board(np.copy(other.board), other.directions)
         return new_board
 
-    def get_possible_moves(self):
-        """
-        :returns: a list of lists of tuples of tuples of possible moves from source > destination
-        """
-        moves = []
-        for free_position in self._free_positions():
-            jumps = [(jump, free_position) for jump in self._possible_jumps_into_empty(free_position)]
-            moves.extend(jumps)
-        return moves
+    def successors(self):
 
-    def make_move(self, source, destination):
-        """
-        :param source: The coordinate of the pin that you'd like to move
-        :param destination: The coordinate of the empty position that you'd like to move the pin into
-        :param apply: If you'd like to apply the move to the current board and change its matrix accordingly
-        :return: new_board: a new board with the move applied
-        """
-        assert (not self._out_of_bounds(*source) and not self._out_of_bounds(*destination))
-        assert (self.board[source] == '*')
-        assert (self.board[destination] == 'o')
-        assert ((source, destination) in self.get_possible_moves())
+        moves = self._get_possible_moves()
+        successors = []
+        for move in moves:
+            successors.append(self._make_move(*move))
 
-        new_board = Board.board_from_board(self)
-
-        # Calculate the coordinates of the pixel that is between the source and destination
-        hop = tuple(np.divide(np.add(source, destination), (2, 2)))
-        assert self.board[hop] == '*'
-
-        new_board.board[source] = 'o'
-        new_board.board[destination] = '*'
-        new_board.board[hop] = 'o'
-
-        return new_board
+        return successors
 
     def check_peg(self, start_position, direction):
         return self._get_spot(start_position, direction) == '*'
@@ -92,6 +67,40 @@ class Board:
                 if pins > 1:
                     return False
         return pins == 1
+
+    def _get_possible_moves(self):
+        """
+        :returns: a list of lists of tuples of tuples of possible moves from source > destination
+        """
+        moves = []
+        for free_position in self._free_positions():
+            jumps = [(jump, free_position) for jump in self._possible_jumps_into_empty(free_position)]
+            moves.extend(jumps)
+        return moves
+
+    def _make_move(self, source, destination):
+        """
+        :param source: The coordinate of the pin that you'd like to move
+        :param destination: The coordinate of the empty position that you'd like to move the pin into
+        :param apply: If you'd like to apply the move to the current board and change its matrix accordingly
+        :return: new_board: a new board with the move applied
+        """
+        assert (not self._out_of_bounds(*source) and not self._out_of_bounds(*destination))
+        assert (self.board[source] == '*')
+        assert (self.board[destination] == 'o')
+        assert ((source, destination) in self._get_possible_moves())
+
+        new_board = Board.board_from_board(self)
+
+        # Calculate the coordinates of the pixel that is between the source and destination
+        hop = tuple(np.divide(np.add(source, destination), (2, 2)))
+        assert self.board[hop] == '*'
+
+        new_board.board[source] = 'o'
+        new_board.board[destination] = '*'
+        new_board.board[hop] = 'o'
+
+        return new_board
 
     @staticmethod
     def _adjusts_coords_to_direction(start_position, direction):
@@ -177,7 +186,7 @@ def main():
 
     # Game loop
     while not board.is_goal():
-        moves = board.get_possible_moves()
+        moves = board._get_possible_moves()
 
         print('\n{}'.format(board))
 
@@ -201,7 +210,7 @@ def main():
                 user_input = int(prompt)
                 break
 
-        board = board.make_move(*moves[user_input])
+        board = board._make_move(*moves[user_input])
 
     print('\nCongratulations! You won!')
     print(board)

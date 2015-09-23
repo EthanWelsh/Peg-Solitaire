@@ -3,11 +3,9 @@ import sys
 
 
 class Board:
-    def __init__(self, board, directions, heuristic=None):
+    def __init__(self, board, directions):
         self.board = board
         self.size = board.shape[0]
-
-        self.heuristic = heuristic
 
         if type(directions) is str:
             if directions == 'all':
@@ -36,7 +34,7 @@ class Board:
 
     @classmethod
     def board_from_board(cls, other):
-        new_board = Board(np.copy(other.board), other.directions, other.heuristic)
+        new_board = Board(np.copy(other.board), other.directions)
         return new_board
 
     def successors(self):
@@ -155,9 +153,6 @@ class Board:
         Checks to see if a given r, c is out of bounds
         """
         return min(r, c) < 0 or max(r, c) >= self.size
-
-    def __lt__(self, other):
-        return self.heuristic(self.board) < self.heuristic(other.board)
 
     def __str__(self):
         ret = '  '

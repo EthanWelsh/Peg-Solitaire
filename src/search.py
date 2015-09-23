@@ -1,10 +1,9 @@
-from queue import PriorityQueue
 import sys
-import heapq
+
 import itertools
 
 from src.board import Board
-
+from src.priority_queue import PriorityQueue
 
 class DepthFirstSearch:
 
@@ -41,11 +40,12 @@ class BreadthFirstSearch:
 
 class AStar:
 
-    def __init__(self, start):
+    def __init__(self, start, heuristic):
         self.start = start
+        self.heuristic = heuristic
 
     def search(self):
-        pq = PriorityQueue()
+        pq = PriorityQueue(self.heuristic)
         pq.put((self.start, []))
         while not pq.empty():
             state, path = pq.get()
@@ -58,25 +58,26 @@ class AStar:
 
 class IterativeDeepeningAStar:
 
-    def __init__(self, start):
+    def __init__(self, start, heuristic):
         self.start = start
+        self.heuristic = heuristic
 
     def search(self):
 
-        def depth_limited_astar(depth, state, path):
-            if len(path) + state.heuristic(state) > depth:
+        def depth_limited_astar(depth, state, path, heuristic):
+            if len(path) + heuristic(state) > depth:
                 return
 
             if state.is_goal():
                 return path
 
             for move, board in state.successors():
-                z = depth_limited_astar(depth, board, path + [move])
+                z = depth_limited_astar(depth, board, path + [move], heuristic)
                 if z is not None:
                     return z
 
         for depth in itertools.count():
-            x = depth_limited_astar(depth, self.start, [])
+            x = depth_limited_astar(depth, self.start, [], self.heuristic)
             if x is not None:
                 return x
 
@@ -85,6 +86,16 @@ def main():
 
     start_board = Board.board_from_file(sys.argv[1])
     method = sys.argv[2]
+    heuristic = sys.argv[3]
+
+    if heuristic == 'max_moves':
+        pass
+    elif heuristic == 'min_moves':
+        pass
+    elif heuristic == 'max_movable_pegs':
+        pass
+
+    heuristic = lambda x: 1
 
     if method == 'dfs':
         dfs = DepthFirstSearch(start_board)
@@ -93,14 +104,10 @@ def main():
         bfs = BreadthFirstSearch(start_board)
         print(next(bfs.search()))
     elif method == 'astar':
-        x = lambda x: 1
-        start_board.heuristic = x
-        astar = AStar(start_board)
+        astar = AStar(start_board, heuristic)
         print(next(astar.search()))
     elif method == 'itdastar':
-        x = lambda x: 1
-        start_board.heuristic = x
-        itd_astar = IterativeDeepeningAStar(start_board)
+        itd_astar = IterativeDeepeningAStar(start_board, heuristic)
         print(itd_astar.search())
     else:
         print("You must choose a valid method")

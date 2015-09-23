@@ -178,7 +178,7 @@ def main():
 
     # Game loop
     while not board.is_goal():
-        moves = board.get_possible_moves()
+        moves = [move for move in board.get_possible_moves()]
 
         print('\n{}'.format(board))
 

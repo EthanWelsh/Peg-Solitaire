@@ -1,6 +1,7 @@
 from queue import PriorityQueue
 import sys
 import heapq
+import itertools
 
 from src.board import Board
 
@@ -56,20 +57,39 @@ class AStar:
 
 
 class IterativeDeepeningAStar:
+
+    def __init__(self, start):
+        self.start = start
+
     def search(self):
-        pass
+
+        def depth_limited_astar(depth, state, path):
+            if len(path) + state.heuristic(state) > depth:
+                return
+
+            if state.is_goal():
+                return path
+
+            for move, board in state.successors():
+                z = depth_limited_astar(depth, board, path + [move])
+                if z is not None:
+                    return z
+
+        for depth in itertools.count():
+            x = depth_limited_astar(depth, self.start, [])
+            if x is not None:
+                return x
+
 
 def main():
-
 
     start_board = Board.board_from_file(sys.argv[1])
 
     x = lambda x: 1
-    start_board.heuristic = x
-    astar = AStar(start_board)
 
-    for b in astar.search():
-        print(b)
+    start_board.heuristic = x
+    itd_astar = IterativeDeepeningAStar(start_board)
+    print(itd_astar.search())
 
 if __name__ == '__main__':
     main()

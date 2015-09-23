@@ -84,12 +84,26 @@ class IterativeDeepeningAStar:
 def main():
 
     start_board = Board.board_from_file(sys.argv[1])
+    method = sys.argv[2]
 
-    x = lambda x: 1
-
-    start_board.heuristic = x
-    itd_astar = IterativeDeepeningAStar(start_board)
-    print(itd_astar.search())
+    if method == 'dfs':
+        dfs = DepthFirstSearch(start_board)
+        print(next(dfs.search()))
+    elif method == 'bfs':
+        bfs = BreadthFirstSearch(start_board)
+        print(next(bfs.search()))
+    elif method == 'astar':
+        x = lambda x: 1
+        start_board.heuristic = x
+        astar = AStar(start_board)
+        print(next(astar.search()))
+    elif method == 'itdastar':
+        x = lambda x: 1
+        start_board.heuristic = x
+        itd_astar = IterativeDeepeningAStar(start_board)
+        print(itd_astar.search())
+    else:
+        print("You must choose a valid method")
 
 if __name__ == '__main__':
     main()

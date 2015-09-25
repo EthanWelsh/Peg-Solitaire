@@ -53,16 +53,36 @@ class Board:
         Checks if the current board is in a goal state (IE there is only one pin left)
         :return: board_is_goal_state
         """
-        pins = 0
+        pegs = 0
 
         for r in range(self.size):
             for c in range(self.size):
                 if self.board[r, c] == '*':
-                    pins += 1
+                    pegs += 1
 
-                if pins > 1:
+                if pegs > 1:
                     return False
-        return pins == 1
+        return pegs == 1
+
+    def peg_count(self):
+        pegs = 0
+
+        for r in range(self.size):
+            for c in range(self.size):
+                if self.board[r, c] == '*':
+                    pegs += 1
+
+        return pegs
+
+    def free_count(self):
+        free = 0
+
+        for r in range(self.size):
+            for c in range(self.size):
+                if self.board[r, c] == 'o':
+                    free += 1
+
+        return free
 
     def get_possible_moves(self):
         """

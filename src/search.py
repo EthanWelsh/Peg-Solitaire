@@ -4,6 +4,7 @@ import itertools
 
 from src.board import Board
 from src.priority_queue import PriorityQueue
+import src.heuristic as heuristics
 
 class DepthFirstSearch:
 
@@ -89,13 +90,11 @@ def main():
     heuristic = sys.argv[3]
 
     if heuristic == 'max_moves':
-        pass
+        heuristic = heuristics.max_moves
     elif heuristic == 'min_moves':
-        pass
+        heuristic = heuristics.min_moves
     elif heuristic == 'max_movable_pegs':
-        pass
-
-    heuristic = lambda x: 1
+        heuristic = heuristics.max_movable_pegs
 
     if method == 'dfs':
         dfs = DepthFirstSearch(start_board)

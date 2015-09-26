@@ -97,6 +97,8 @@ class IterativeDeepeningAStar:
             x, depth = depth_limited_astar(depth, self.start, [], self.heuristic)
             if x is not None:
                 return x
+            elif depth == float('inf'):
+                return None
 
 
 def main():
@@ -115,21 +117,37 @@ def main():
             heuristic = heuristics.min_moves
         elif heuristic == 'max_movable_pegs':
             heuristic = heuristics.max_movable_pegs
+        else:
+            print("You did not pick a viable heuristic. Exiting...")
+            return
 
     if method == 'dfs':
         dfs = DepthFirstSearch(start_board)
-        print(next(dfs.search()))
+        try:
+            print(next(dfs.search()))
+        except StopIteration:
+            print(None)
+
     elif method == 'bfs':
-        bfs = BreadthFirstSearch(start_board)
-        print(next(bfs.search()))
+        bfs = BreadthFirstSearch(start_board, check_duplicates)
+        try:
+            print(next(bfs.search()))
+        except StopIteration:
+            print(None)
+
     elif method == 'astar':
         astar = AStar(start_board, heuristic, check_duplicates)
-        print(next(astar.search()))
+        try:
+            print(next(astar.search()))
+        except StopIteration:
+            print(None)
+
     elif method == 'itdastar':
         itd_astar = IterativeDeepeningAStar(start_board, heuristic)
         print(itd_astar.search())
     else:
-        print("You must choose a valid method")
+        print("You must choose a valid search method. Exiting...")
+        return
 
 if __name__ == '__main__':
     main()

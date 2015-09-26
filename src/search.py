@@ -142,9 +142,9 @@ def main():
         except StopIteration:
             print(None)
 
-    elif method == 'itdastar':
-        itd_astar = IterativeDeepeningAStar(start_board, heuristic)
-        print(itd_astar.search())
+    elif method == 'idastar':
+        id_astar = IterativeDeepeningAStar(start_board, heuristic)
+        print(id_astar.search())
     else:
         print("You must choose a valid search method. Exiting...")
         return

@@ -8,8 +8,11 @@ import src.heuristic as heuristics
 class DepthFirstSearch:
     def __init__(self, start):
         self.start = start
+        self.nodes_visited = 0
 
     def search(self, state=None, path=None):
+        self.nodes_visited += 1
+
         if not state and not path:
             state = self.start
             path = []
@@ -26,12 +29,15 @@ class BreadthFirstSearch:
         self.start = start
         self.check_duplicates = check_duplicates
         self.visited = []
+        self.nodes_visited = 0
 
     def search(self):
         queue = [(self.start, [])]
 
         while queue:
             (state, path) = queue.pop(0)
+            self.nodes_visited += 1
+
             for move, board in state.successors():
                 if self.check_duplicates and board in self.visited:
                     continue
@@ -50,12 +56,14 @@ class AStar:
         self.heuristic = heuristic
         self.check_duplicates = check_duplicates
         self.visited = []
+        self.nodes_visited = 0
 
     def search(self):
         pq = PriorityQueue(self.heuristic)
         pq.put((self.start, []))
         while not pq.empty():
             state, path = pq.get()
+            self.nodes_visited += 1
 
             if state.is_goal():
                 yield path
@@ -72,10 +80,13 @@ class IterativeDeepeningAStar:
     def __init__(self, start, heuristic):
         self.start = start
         self.heuristic = heuristic
+        self.nodes_visited = 0
 
     def search(self):
 
         def depth_limited_astar(depth, state, path, heuristic):
+            self.nodes_visited += 1
+
             score = len(path) + heuristic(state)
             if score > depth:
                 return None, score
@@ -84,11 +95,11 @@ class IterativeDeepeningAStar:
 
             min = float('inf')
             for move, board in state.successors():
-                z, s = depth_limited_astar(depth, board, path + [move], heuristic)
-                if s < min:
-                    min = s
-                if z is not None:
-                    return z, s
+                search_path, score = depth_limited_astar(depth, board, path + [move], heuristic)
+                if score < min:
+                    min = score
+                if search_path is not None:
+                    return search_path, score
             return None, min
 
         x = None
@@ -122,32 +133,35 @@ def main():
             return
 
     if method == 'dfs':
-        dfs = DepthFirstSearch(start_board)
+        seeker = DepthFirstSearch(start_board)
         try:
-            print(next(dfs.search()))
+            print(next(seeker.search()))
         except StopIteration:
             print(None)
 
     elif method == 'bfs':
-        bfs = BreadthFirstSearch(start_board, check_duplicates)
+        seeker = BreadthFirstSearch(start_board, check_duplicates)
         try:
-            print(next(bfs.search()))
+            print(next(seeker.search()))
         except StopIteration:
             print(None)
 
     elif method == 'astar':
-        astar = AStar(start_board, heuristic, check_duplicates)
+        seeker = AStar(start_board, heuristic, check_duplicates)
         try:
-            print(next(astar.search()))
+            print(next(seeker.search()))
         except StopIteration:
             print(None)
 
     elif method == 'idastar':
-        id_astar = IterativeDeepeningAStar(start_board, heuristic)
-        print(id_astar.search())
+        seeker = IterativeDeepeningAStar(start_board, heuristic)
+        print(seeker.search())
     else:
         print("You must choose a valid search method. Exiting...")
         return
+
+    print("Nodes Visited:", seeker)
+
 
 if __name__ == '__main__':
     main()

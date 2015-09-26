@@ -1,4 +1,5 @@
 import sys
+import time
 
 from src.board import Board
 from src.priority_queue import PriorityQueue
@@ -116,6 +117,7 @@ def main():
     start_board = Board.board_from_file(sys.argv[1])
     tree_or_graph = sys.argv[2]
     method = sys.argv[3]
+    heuristic = ''
 
     check_duplicates = 'graph' in tree_or_graph
 
@@ -132,6 +134,7 @@ def main():
             print("You did not pick a viable heuristic. Exiting...")
             return
 
+    start = time.time()
     if method == 'dfs':
         seeker = DepthFirstSearch(start_board)
         try:
@@ -156,11 +159,16 @@ def main():
     elif method == 'idastar':
         seeker = IterativeDeepeningAStar(start_board, heuristic)
         print(seeker.search())
+
     else:
         print("You must choose a valid search method. Exiting...")
         return
 
-    print("Nodes Visited:", seeker)
+    end = time.time()
+
+    print("Duration:", end-start)
+    print("Nodes Visited:", seeker.nodes_visited)
+
 
 
 if __name__ == '__main__':

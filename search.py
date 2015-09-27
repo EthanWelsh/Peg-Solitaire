@@ -94,12 +94,12 @@ class IterativeDeepeningAStar:
     def search(self):
         bound = self.heuristic(self.start)
         while True:
-            t = self.depth_limited_astar(self.start, bound, [])
-            if t is not None:
-                return t
-            elif t is float('inf'):
+            path, cost = self.depth_limited_astar(self.start, bound, [])
+            if path is not None:
+                return path
+            elif cost is float('inf'):
                 return None
-            bound = t
+            bound = cost
 
     def depth_limited_astar(self, node, bound, path):
         cost = len(path) + self.heuristic(node)
@@ -116,36 +116,6 @@ class IterativeDeepeningAStar:
             min_score = min(min_score, child_cost)
         return None, min_score
 
-    """
-    def search(self):
-        x = None
-        bound = 0
-        while x is None:
-            x, bound = self.depth_limited_astar(bound, self.start, [], self.heuristic)
-            if x is not None:
-                self.space = len(x)
-                return x
-            elif bound == float('inf'):
-                return None
-
-    def depth_limited_astar(self, bound, state, path, heuristic):
-        self.nodes_visited += 1
-
-        score = len(path) + heuristic(state)
-        if score > bound:
-            return None, score
-        if state.is_goal():
-            return path, score
-
-        min_score = float('inf')
-        for move, board in state.successors():
-            search_path, score = self.depth_limited_astar(bound, board, path + [move], heuristic)
-            min_score = min(min_score, score)
-
-            if search_path is not None:
-                return search_path, score
-        return None, min_score
-    """
 
 def main():
     start_board = Board.board_from_file(sys.argv[1])
@@ -193,6 +163,8 @@ def main():
     elif method == 'idastar':
         seeker = IterativeDeepeningAStar(start_board, heuristic)
         path = seeker.search()
+        if not path:
+            path = None
 
     else:
         print('You must choose a valid search method. Exiting...')
@@ -203,8 +175,11 @@ def main():
     print('Search:', sys.argv[2], 'on', sys.argv[3])
     print('Input File:', sys.argv[1])
 
-    for step in path:
-        print(step[0], '-->', step[1])
+    if path:
+        for step in path:
+            print(step[0], '-->', step[1])
+    else:
+        print("No solution found!")
 
     print('Duration: {0:.4f} seconds'.format(end - start))
     print('Nodes Visited:', seeker.nodes_visited)

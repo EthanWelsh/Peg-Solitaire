@@ -178,12 +178,13 @@ def main():
     print('Search:', sys.argv[2], "on", sys.argv[3])
     print('Input File:', sys.argv[1])
 
-    print("Duration:", end-start, "seconds")
+    print("Duration: {0:.4f} seconds".format(end - start))
     print("Nodes Visited:", seeker.nodes_visited)
     print("Space:", seeker.space, "nodes")
 
     if hasattr(seeker, 'visited') and 'graph' in tree_or_graph:
         print("Visited Size:", len(seeker.visited))
+
 
 if __name__ == '__main__':
     main()

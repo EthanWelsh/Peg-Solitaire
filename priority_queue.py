@@ -2,7 +2,6 @@ import heapq
 
 
 class PriorityQueue:
-
     class BoardPathPair:
         def __init__(self, board, path, astar_value):
             self.board = board

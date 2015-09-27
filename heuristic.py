@@ -1,6 +1,3 @@
-from src.board import Board
-
-
 def max_moves(board):
     pegs_on_board = board.peg_count()
     moves = [move for move in board.get_possible_moves()]

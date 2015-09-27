@@ -1,9 +1,9 @@
 import sys
 import time
 
-from src.board import Board
-from src.priority_queue import PriorityQueue
-import src.heuristic as heuristics
+from board import Board
+from priority_queue import PriorityQueue
+import heuristic as heuristics
 
 
 class DepthFirstSearch:

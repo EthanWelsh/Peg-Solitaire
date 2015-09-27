@@ -175,6 +175,9 @@ def main():
 
     end = time.time()
 
+    print('Search:', sys.argv[2], "on", sys.argv[3])
+    print('Input File:', sys.argv[1])
+
     print("Duration:", end-start, "seconds")
     print("Nodes Visited:", seeker.nodes_visited)
     print("Space:", seeker.space, "nodes")

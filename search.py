@@ -140,50 +140,53 @@ def main():
         elif heuristic == 'max_movable_pegs':
             heuristic = heuristics.max_movable_pegs
         else:
-            print("You did not pick a viable heuristic. Exiting...")
+            print('You did not pick a viable heuristic. Exiting...')
             return
 
     start = time.time()
     if method == 'dfs':
         seeker = DepthFirstSearch(start_board)
         try:
-            print(next(seeker.search()))
+            path = next(seeker.search())
         except StopIteration:
-            print(None)
+            path = None
 
     elif method == 'bfs':
         seeker = BreadthFirstSearch(start_board, check_duplicates)
         try:
-            print(next(seeker.search()))
+            path = next(seeker.search())
         except StopIteration:
-            print(None)
+            path = None
 
     elif method == 'astar':
         seeker = AStar(start_board, heuristic, check_duplicates)
         try:
-            print(next(seeker.search()))
+            path = next(seeker.search())
         except StopIteration:
-            print(None)
+            path = None
 
     elif method == 'idastar':
         seeker = IterativeDeepeningAStar(start_board, heuristic)
-        print(seeker.search())
+        path = seeker.search()
 
     else:
-        print("You must choose a valid search method. Exiting...")
+        print('You must choose a valid search method. Exiting...')
         return
 
     end = time.time()
 
-    print('Search:', sys.argv[2], "on", sys.argv[3])
+    print('Search:', sys.argv[2], 'on', sys.argv[3])
     print('Input File:', sys.argv[1])
 
-    print("Duration: {0:.4f} seconds".format(end - start))
-    print("Nodes Visited:", seeker.nodes_visited)
-    print("Space:", seeker.space, "nodes")
+    for step in path:
+        print(step[0], '-->',step[1])
+
+    print('Duration: {0:.4f} seconds'.format(end - start))
+    print('Nodes Visited:', seeker.nodes_visited)
+    print('Space: {} nodes'.format(seeker.space))
 
     if hasattr(seeker, 'visited') and 'graph' in tree_or_graph:
-        print("Visited Size:", len(seeker.visited))
+        print('Visited Size:', len(seeker.visited))
 
 
 if __name__ == '__main__':

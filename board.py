@@ -200,7 +200,7 @@ def main():
 
         # Print out a list of all possible moves
         if len(moves) == 0:
-            print("You lost! Sorry")
+            print('You lost! Sorry')
             return 0
 
         for move_num, move in enumerate(moves):

@@ -96,12 +96,14 @@ class IterativeDeepeningAStar:
         while True:
             path, cost = self.depth_limited_astar(self.start, bound, [])
             if path is not None:
+                self.space = len(path)
                 return path
             elif cost is float('inf'):
                 return None
             bound = cost
 
     def depth_limited_astar(self, node, bound, path):
+        self.nodes_visited += 1
         cost = len(path) + self.heuristic(node)
         if cost > bound:
             return None, cost
@@ -172,7 +174,8 @@ def main():
 
     end = time.time()
 
-    print('Search:', sys.argv[2], 'on', sys.argv[3])
+    print("-"*30)
+    print('Search:', sys.argv[2], 'on', sys.argv[3], sys.argv[4] if len(sys.argv) > 4 else '')
     print('Input File:', sys.argv[1])
 
     if path:
@@ -187,6 +190,8 @@ def main():
 
     if hasattr(seeker, 'visited') and 'graph' in tree_or_graph:
         print('Visited Size:', len(seeker.visited))
+
+    print("-"*30)
 
 
 if __name__ == '__main__':

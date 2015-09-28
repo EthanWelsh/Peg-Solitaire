@@ -175,6 +175,9 @@ class Board:
         """
         return min(r, c) < 0 or max(r, c) >= self.size
 
+    def __eq__(self, other):
+        return np.array_equal(self.board, other.board)
+
     def __str__(self):
         ret = '  '
         for i in range(self.size):

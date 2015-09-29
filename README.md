@@ -2,15 +2,11 @@
 
 Version: This particular solution is written using Python3.4.
 
-Implementation Details
------------------------
-I used a fairly simple object that encapsulated 2d numpy character matrix in order to represent my board's state.
-I considered using a boolean matrix instead (which would save space), but I decided that for the time being I valued the
-simplicity of the program more than efficiency. I also toyed around with the idea of representing my states as a just a
-list of moves (I'd also store the start state). Once again, this could vastly cut down on the space (although I'd have
-to perform more calculations to find the matrix that is indicated by the list of moves), but I decided against it
-because (for the time being) simplicity mattered most to me.
+Analysis of Search Strategies
+=============================
+Of all the search strategies, depth first search (DFS) performed the best by far. I had anticipated that it would perform far better than breadth first search (BFS): all the available solutions occur at depth 13, and they are fairly numerous. What I had not anticipated was how poorly A* and IDA* performed. It occurred to me that the heuristics that we were testing with were not ideal, but I had presumed that they would manage to find a solution at least as quickly as DFS. In actuality though, the opposite it true: A* found a solution only marginally faster than BFS, and was several factors of magnitude slower than uninformed DFS. Upon more careful inspection this is due to the fact that the heuristics that are being used are extremely poor predictors of performance.
 
+Applying DFS to the peg puzzle is especially effective due to the fact the nature of the puzzle solves most of the ‘problems’ that typically emerge in dealing with DFS: namely completeness and optimality. Regarding completeness, naive DFS in most search spaces can easily end up getting trapped in loops around the same states. In the peg puzzle, this is not the case: although there are duplicate states, no move will ever lead to itself again and so there is not risk of falling into loops. Regarding optimality, the peg puzzle does not really have an ‘optimal’ solution, in that all solutions will always occur after the same number of moves and therefore all moves are in fact optimal. In addition, DFS benefitted from a relatively dense.
 
 Sample Output
 =============

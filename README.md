@@ -13,8 +13,8 @@ because (for the time being) simplicity mattered most to me.
 
 
 Sample Output
---------------
-    
+=============
+```
 ------------------------------
 Search: tree-search on dfs 
 Input File: input_files/sample04.txt
@@ -145,3 +145,4 @@ Duration: 765.7645 seconds
 Nodes Visited: 609858
 Space: 11 nodes
 ------------------------------
+```

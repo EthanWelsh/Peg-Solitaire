@@ -1,6 +1,6 @@
 # Peg-Solitaire
 
-Version: This particular solution is written using Python3.4.
+Written using Python3.4 with numpy 1.9.2
 
 Analysis of Search Strategies
 =============================

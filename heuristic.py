@@ -44,12 +44,12 @@ def manhattan_cost(board):
     for r in range(board.size):
         for c in range(board.size):
             if board.board[r, c] == Spot.PEG:
-                number_of_pegs+= 1
+                number_of_pegs += 1
                 for rr in range(board.size):
                     for cc in range(board.size):
                         if board.board[rr, cc] == Spot.PEG:
                             man += abs(r - rr) + abs(c - cc)
-    return man/number_of_pegs
+    return man / number_of_pegs
 
 
 def pagoda_value(board):

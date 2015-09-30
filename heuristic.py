@@ -22,7 +22,7 @@ def min_moves(board):
 
     moves, _ = zip(*moves)
     moves = len(moves)
-    return pegs_on_board - 1 - moves / (moves + 1)
+    return pegs_on_board - 1 - (moves / (moves + 1))
 
 
 def max_movable_pegs(board):
@@ -34,7 +34,7 @@ def max_movable_pegs(board):
 
     moves, _ = zip(*moves)
     moves = len(moves)
-    return pegs_on_board - 1 - 1 / (moves + 1)
+    return pegs_on_board - 1 - (1 / (moves + 1))
 
 
 def manhattan_cost(board):

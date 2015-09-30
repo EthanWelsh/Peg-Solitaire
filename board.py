@@ -1,7 +1,7 @@
 import sys
+from enum import IntEnum
 
 import numpy as np
-from enum import IntEnum
 
 
 class Spot(IntEnum):

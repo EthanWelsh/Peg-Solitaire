@@ -136,6 +136,8 @@ def main():
             heuristic = heuristics.min_moves
         elif heuristic == 'max_movable_pegs':
             heuristic = heuristics.max_movable_pegs
+        elif heuristic == 'man':
+            heuristic = heuristics.manhattan_cost
         else:
             print('You did not pick a viable heuristic. Exiting...')
             return
@@ -174,7 +176,7 @@ def main():
 
     end = time.time()
 
-    print("-"*30)
+    print("-" * 30)
     print('Search:', sys.argv[2], 'on', sys.argv[3], sys.argv[4] if len(sys.argv) > 4 else '')
     print('Input File:', sys.argv[1])
 
@@ -191,7 +193,7 @@ def main():
     if hasattr(seeker, 'visited') and 'graph' in tree_or_graph:
         print('Visited Size:', len(seeker.visited))
 
-    print("-"*30)
+    print("-" * 30)
 
 
 if __name__ == '__main__':

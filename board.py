@@ -15,8 +15,6 @@ class Board:
                 self.directions = ['n', 'e', 's', 'w']
             elif directions == 'swne':
                 self.directions = ['n', 'ne', 'e', 's', 'sw', 'w']
-            else:
-                assert False
         else:
             self.directions = directions
 
@@ -99,16 +97,10 @@ class Board:
         :param apply: If you'd like to apply the move to the current board and change its matrix accordingly
         :return: new_board: a new board with the move applied
         """
-        assert (not self._out_of_bounds(*source) and not self._out_of_bounds(*destination))
-        assert (self.board[source] == '*')
-        assert (self.board[destination] == 'o')
-        assert ((source, destination) in self.get_possible_moves())
-
         new_board = Board.board_from_board(self)
 
         # Calculate the coordinates of the pixel that is between the source and destination
         hop = tuple(np.divide(np.add(source, destination), (2, 2)))
-        assert self.board[hop] == '*'
 
         new_board.board[source] = 'o'
         new_board.board[destination] = '*'
@@ -137,7 +129,6 @@ class Board:
         Given the coordinate of an empty space, will return the locations of all the pegs that could jump into that cell
         :param empty_coord: the coordinate of the empty spot that you'd like to check from
         """
-        assert self.board[empty_coord] == 'o'
 
         for direction in self.directions:
             if self.check_peg(empty_coord, direction) and self.check_peg(empty_coord, direction * 2):
@@ -159,9 +150,6 @@ class Board:
         :param direction: The direction that you'd like to look in
         :return: the character at that position in the board
         """
-        r, c = start_position
-        if self._out_of_bounds(r, c):
-            return '.'
 
         r, c = self._adjusts_coords_to_direction(start_position, direction)
         if self._out_of_bounds(r, c):
@@ -176,7 +164,7 @@ class Board:
         return min(r, c) < 0 or max(r, c) >= self.size
 
     def __eq__(self, other):
-        return np.array_equal(self.board, other.board)
+        return (self.board == other.board).all()
 
     def __str__(self):
         ret = '  '

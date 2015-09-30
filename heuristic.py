@@ -32,3 +32,20 @@ def max_movable_pegs(board):
     moves, _ = zip(*moves)
     moves = len(moves)
     return pegs_on_board - 1 - 1 / (moves + 1)
+
+
+def manhattan_cost(board):
+    man = 0
+    for r in range(board.size):
+        for c in range(board.size):
+            if board[r, c] == '*':
+                man += abs(r - int(board.size / 2)) + abs(c - int(board.size / 2))
+    return man
+
+
+def pagoda_value(board):
+    pass
+
+
+def isolated_pegs(board):
+    pass

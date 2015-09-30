@@ -1,7 +1,0 @@
-swne
-5
-o o o o *
-o o o * .
-o o o . .
-o * . . .
-o * . . .

@@ -37,7 +37,7 @@ def max_movable_pegs(board):
     return pegs_on_board - 1 - (1 / (moves + 1))
 
 
-def manhattan_cost(board):
+def manhattan_distance(board):
     man = 0
     number_of_pegs = 0
 

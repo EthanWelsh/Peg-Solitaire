@@ -1,7 +1,7 @@
 import subprocess
 import sys
 
-command = sys.executable + " search.py input_files/sample01.txt {} {} "
+command = sys.executable + " search.py input_files/ortho.txt {} {} "
 
 # Tree Search with DFS
 subprocess.call(command.format('tree-search', 'dfs'), shell=True)
@@ -23,3 +23,6 @@ subprocess.call(command.format('graph-search', 'astar') + 'min_moves', shell=Tru
 
 # Tree Search with IDA* using any of the three heuristics
 subprocess.call(command.format('tree-search', 'idastar') + 'min_moves', shell=True)
+
+# Graph Search with A* using manhattan_distance
+subprocess.call(command.format('graph-search', 'astar') + 'man', shell=True)

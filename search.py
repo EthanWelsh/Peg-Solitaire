@@ -137,7 +137,7 @@ def main():
         elif heuristic == 'max_movable_pegs':
             heuristic = heuristics.max_movable_pegs
         elif heuristic == 'man':
-            heuristic = heuristics.manhattan_cost
+            heuristic = heuristics.manhattan_distance
         else:
             print('You did not pick a viable heuristic. Exiting...')
             return

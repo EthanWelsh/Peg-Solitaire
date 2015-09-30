@@ -1,6 +1,11 @@
 import sys
 
 import numpy as np
+from enum import IntEnum
+
+
+class Spot(IntEnum):
+    PEG, FREE, OUT_OF_BOUNDS = range(3)
 
 
 class Board:
@@ -28,7 +33,19 @@ class Board:
         with open(file_name, 'r') as peg_file:
             directions, _, *matrix_lines = peg_file.readlines()
 
-        board_matrix = np.array([[spot for spot in line.strip().split(' ')] for line in matrix_lines])
+        matrix = np.array([[spot for spot in line.strip().split(' ')] for line in matrix_lines])
+
+        board_matrix = np.zeros(matrix.shape, dtype=np.uint8)
+
+        for r in range(matrix.shape[0]):
+            for c in range(matrix.shape[1]):
+                if matrix[r, c] == '*':
+                    board_matrix[r, c] = int(Spot.PEG)
+                elif matrix[r, c] == 'o':
+                    board_matrix[r, c] = int(Spot.FREE)
+                else:
+                    board_matrix[r, c] = int(Spot.OUT_OF_BOUNDS)
+
         return Board(board=board_matrix, directions=directions.strip())
 
     @classmethod
@@ -42,10 +59,10 @@ class Board:
             yield (move, self.make_move(*move))
 
     def check_peg(self, start_position, direction):
-        return self._get_spot(start_position, direction) == '*'
+        return self._get_spot(start_position, direction) == Spot.PEG
 
     def check_free(self, start_position, direction):
-        return self._get_spot(start_position, direction) == 'o'
+        return self._get_spot(start_position, direction) == Spot.FREE
 
     def is_goal(self):
         """
@@ -56,7 +73,7 @@ class Board:
 
         for r in range(self.size):
             for c in range(self.size):
-                if self.board[r, c] == '*':
+                if self.board[r, c] == Spot.PEG:
                     pegs += 1
 
                 if pegs > 1:
@@ -68,7 +85,7 @@ class Board:
 
         for r in range(self.size):
             for c in range(self.size):
-                if self.board[r, c] == '*':
+                if self.board[r, c] == Spot.PEG:
                     pegs += 1
 
         return pegs
@@ -78,7 +95,7 @@ class Board:
 
         for r in range(self.size):
             for c in range(self.size):
-                if self.board[r, c] == 'o':
+                if self.board[r, c] == Spot.FREE:
                     free += 1
 
         return free
@@ -102,9 +119,9 @@ class Board:
         # Calculate the coordinates of the pixel that is between the source and destination
         hop = tuple(np.divide(np.add(source, destination), (2, 2)))
 
-        new_board.board[source] = 'o'
-        new_board.board[destination] = '*'
-        new_board.board[hop] = 'o'
+        new_board.board[source] = Spot.FREE
+        new_board.board[destination] = Spot.PEG
+        new_board.board[hop] = Spot.FREE
 
         return new_board
 
@@ -141,7 +158,7 @@ class Board:
         """
         for r in range(self.size):
             for c in range(self.size):
-                if self.board[r, c] == 'o':
+                if self.board[r, c] == Spot.FREE:
                     yield (r, c)
 
     def _get_spot(self, start_position, direction):

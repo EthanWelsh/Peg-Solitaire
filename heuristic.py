@@ -1,3 +1,6 @@
+from board import Spot
+
+
 def max_moves(board):
     pegs_on_board = board.peg_count()
     moves = [move for move in board.get_possible_moves()]
@@ -38,7 +41,7 @@ def manhattan_cost(board):
     man = 0
     for r in range(board.size):
         for c in range(board.size):
-            if board[r, c] == '*':
+            if board[r, c] == Spot.PEG:
                 man += abs(r - int(board.size / 2)) + abs(c - int(board.size / 2))
     return man
 

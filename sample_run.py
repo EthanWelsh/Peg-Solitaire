@@ -1,7 +1,7 @@
 import subprocess
 import sys
 
-command = sys.executable + " search.py input_files/sample02.txt {} {} "
+command = sys.executable + " search.py input_files/sample01.txt {} {} "
 
 #Tree Search with DFS
 subprocess.call(command.format('tree-search', 'dfs'), shell=True)

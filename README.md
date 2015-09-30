@@ -10,7 +10,7 @@ Applying DFS to the peg puzzle is especially effective due to the fact the natur
 
 *Extra Credit*: For my extra credit, I implemented a manhattan distance function that calculated the manhattan distance from every peg to every other peg on the board, and then divided that score by the number of pegs on the board. I chose this heuristic because it favored board configurations that were more clumped together (the average distance being smaller) and punished boards that were too spread out (which might indicate a path leading to a dead end). Overall, the heuristic performed quite well! It was the only one of the heuristics to beat the simple DFS implementation, and performed consistently better by several factors of magnitude on every board I could find than anything else.
 
-One downside of this heuristic is the abismal computational overhead. My manhattan distance heuristic takes O(N^4) operations, where N is the length or width of the board. The heuristic performed quite well on boards under 8x8, but past this point the heuristic slowed down the search considerably.
+One downside of this heuristic is the abysmal computational overhead. My manhattan distance heuristic takes O(N^4) operations, where N is the length or width of the board. The heuristic performed quite well on boards under 8x8, but past this point the heuristic slowed down the search considerably.
 
 
 Sample Output

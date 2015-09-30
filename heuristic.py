@@ -1,3 +1,6 @@
+from board import Spot
+
+
 def max_moves(board):
     pegs_on_board = board.peg_count()
     moves = [move for move in board.get_possible_moves()]
@@ -36,11 +39,17 @@ def max_movable_pegs(board):
 
 def manhattan_cost(board):
     man = 0
+    number_of_pegs = 0
+
     for r in range(board.size):
         for c in range(board.size):
-            if board[r, c] == '*':
-                man += abs(r - int(board.size / 2)) + abs(c - int(board.size / 2))
-    return man
+            if board.board[r, c] == Spot.PEG:
+                number_of_pegs += 1
+                for rr in range(board.size):
+                    for cc in range(board.size):
+                        if board.board[rr, cc] == Spot.PEG:
+                            man += abs(r - rr) + abs(c - cc)
+    return man / number_of_pegs
 
 
 def pagoda_value(board):

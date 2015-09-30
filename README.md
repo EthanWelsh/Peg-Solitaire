@@ -13,7 +13,7 @@ Sample Output
 ```
 ------------------------------
 Search: tree-search on dfs 
-Input File: input_files/sample04.txt
+Input File: input_files/ortho.txt
 (0, 2) --> (2, 2)
 (2, 4) --> (0, 2)
 (3, 2) --> (1, 2)
@@ -25,13 +25,13 @@ Input File: input_files/sample04.txt
 (2, 0) --> (2, 2)
 (3, 1) --> (1, 3)
 (0, 2) --> (2, 4)
-Duration: 0.0269 seconds
+Duration: 0.0403 seconds
 Nodes Visited: 33
 Space: 12 nodes
 ------------------------------
 ------------------------------
-Search: tree-search on bfs 
-Input File: input_files/sample04.txt
+Search: tree-search on bfs
+Input File: input_files/ortho.txt
 (0, 2) --> (2, 2)
 (2, 4) --> (0, 2)
 (3, 2) --> (1, 2)
@@ -43,13 +43,13 @@ Input File: input_files/sample04.txt
 (2, 0) --> (2, 2)
 (3, 1) --> (1, 3)
 (0, 2) --> (2, 4)
-Duration: 198.0089 seconds
+Duration: 333.4521 seconds
 Nodes Visited: 167668
 Space: 88392 nodes
 ------------------------------
 ------------------------------
-Search: graph-search on bfs 
-Input File: input_files/sample04.txt
+Search: graph-search on bfs
+Input File: input_files/ortho.txt
 (0, 2) --> (2, 2)
 (2, 4) --> (0, 2)
 (3, 2) --> (1, 2)
@@ -61,14 +61,14 @@ Input File: input_files/sample04.txt
 (2, 0) --> (2, 2)
 (3, 1) --> (1, 3)
 (0, 2) --> (2, 4)
-Duration: 185.0698 seconds
+Duration: 78.4520 seconds
 Nodes Visited: 2303
 Space: 721 nodes
 Visited Size: 2339
 ------------------------------
 ------------------------------
 Search: graph-search on astar max_movable_pegs
-Input File: input_files/sample04.txt
+Input File: input_files/ortho.txt
 (0, 2) --> (2, 2)
 (3, 2) --> (1, 2)
 (2, 4) --> (0, 2)
@@ -80,14 +80,14 @@ Input File: input_files/sample04.txt
 (4, 2) --> (2, 0)
 (2, 0) --> (0, 2)
 (0, 2) --> (2, 4)
-Duration: 147.1836 seconds
+Duration: 65.5935 seconds
 Nodes Visited: 2225
 Space: 274 nodes
 Visited Size: 2343
 ------------------------------
 ------------------------------
 Search: graph-search on astar max_moves
-Input File: input_files/sample04.txt
+Input File: input_files/ortho.txt
 (0, 2) --> (2, 2)
 (2, 0) --> (0, 2)
 (3, 2) --> (1, 2)
@@ -99,14 +99,14 @@ Input File: input_files/sample04.txt
 (3, 1) --> (1, 3)
 (0, 2) --> (2, 4)
 (2, 4) --> (2, 2)
-Duration: 701.5600 seconds
+Duration: 65.7972 seconds
 Nodes Visited: 2218
 Space: 532 nodes
 Visited Size: 2343
 ------------------------------
 ------------------------------
 Search: graph-search on astar min_moves
-Input File: input_files/sample04.txt
+Input File: input_files/ortho.txt
 (2, 4) --> (2, 2)
 (4, 2) --> (2, 4)
 (1, 1) --> (3, 3)
@@ -118,14 +118,14 @@ Input File: input_files/sample04.txt
 (3, 3) --> (1, 1)
 (4, 2) --> (2, 0)
 (2, 0) --> (0, 2)
-Duration: 147.0782 seconds
+Duration: 68.1269 seconds
 Nodes Visited: 2218
 Space: 954 nodes
 Visited Size: 2343
 ------------------------------
 ------------------------------
 Search: tree-search on idastar min_moves
-Input File: input_files/sample04.txt
+Input File: input_files/ortho.txt
 (0, 2) --> (2, 2)
 (2, 4) --> (0, 2)
 (3, 2) --> (1, 2)
@@ -137,8 +137,27 @@ Input File: input_files/sample04.txt
 (2, 0) --> (2, 2)
 (3, 1) --> (1, 3)
 (0, 2) --> (2, 4)
-Duration: 765.7645 seconds
+Duration: 1658.5877 seconds
 Nodes Visited: 609858
 Space: 11 nodes
+------------------------------
+------------------------------
+Search: graph-search on astar man
+Input File: input_files/ortho.txt
+(0, 2) --> (2, 2)
+(2, 4) --> (0, 2)
+(4, 2) --> (2, 4)
+(2, 0) --> (4, 2)
+(1, 1) --> (3, 1)
+(3, 1) --> (1, 3)
+(2, 4) --> (2, 2)
+(3, 2) --> (1, 2)
+(0, 2) --> (2, 2)
+(1, 3) --> (3, 1)
+(4, 2) --> (2, 0)
+Duration: 0.2491 seconds
+Nodes Visited: 50
+Space: 28 nodes
+Visited Size: 76
 ------------------------------
 ```

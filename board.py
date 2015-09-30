@@ -29,6 +29,19 @@ class Board:
             directions, _, *matrix_lines = peg_file.readlines()
 
         board_matrix = np.array([[spot for spot in line.strip().split(' ')] for line in matrix_lines])
+        num_matrix = np.zeros(board_matrix.shape, dtype=np.uint8)
+
+        for r in range(board_matrix.shape[0]):
+            for c in range(board_matrix.shape[1]):
+                if board_matrix[r, c] == '*':
+                    num_matrix[r, c] = 1
+                elif board_matrix[r, c] == 'o':
+                    num_matrix[r, c] = 0
+                else num_matrix[r, c] == '.'
+                    num_matrix[r, c] = -1
+
+
+
         return Board(board=board_matrix, directions=directions.strip())
 
     @classmethod

@@ -47,7 +47,7 @@ class BreadthFirstSearch:
                 if self.check_duplicates and board in self.visited:
                     continue
                 elif self.check_duplicates:
-                    self.visited = self.visited + [board]
+                    self.visited += [board] + board.get_symmetrically_equivalent_boards()
 
                 if board.is_goal():
                     yield path + [move]
@@ -79,7 +79,7 @@ class AStar:
                 if self.check_duplicates and board in self.visited:
                     continue
                 elif self.check_duplicates:
-                    self.visited = self.visited + [board]
+                    self.visited += [board] + board.get_symmetrically_equivalent_boards()
 
                 pq.put((board, path + [move]))
 

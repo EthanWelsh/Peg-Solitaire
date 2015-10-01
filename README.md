@@ -8,9 +8,22 @@ Of all the search strategies, depth first search (DFS) performed the best by far
 
 Applying DFS to the peg puzzle is especially effective due to the fact the nature of the puzzle solves most of the ‘problems’ that typically emerge in dealing with DFS: namely completeness and optimality. Regarding completeness, naive DFS in most search spaces can easily end up getting trapped in loops around the same states. In the peg puzzle, this is not the case: although there are duplicate states, no move will ever lead to itself again and so there is not risk of falling into loops. Regarding optimality, the peg puzzle does not really have an ‘optimal’ solution, in that all solutions will always occur after the same number of moves and therefore all paths are in fact optimal.
 
-*Extra Credit*: For my extra credit, I implemented a manhattan distance function that calculated the manhattan distance from every peg to every other peg on the board, and then divided that score by the number of pegs on the board. I chose this heuristic because it favored board configurations that were more clumped together (the average distance being smaller) and punished boards that were too spread out (which might indicate a path leading to a dead end). Overall, the heuristic performed quite well! It was the only one of the heuristics to beat the simple DFS implementation, and performed consistently better by several factors of magnitude on every board I could find than anything else.
+Extra Credit
+============
+
+Manhattan Distance
+------------------
+For my extra credit, I implemented a manhattan distance function that calculated the manhattan distance from every peg to every other peg on the board, and then divided that score by the number of pegs on the board. I chose this heuristic because it favored board configurations that were more clumped together (the average distance being smaller) and punished boards that were too spread out (which might indicate a path leading to a dead end). Overall, the heuristic performed quite well! It was the only one of the heuristics to beat the simple DFS implementation, and performed consistently better by several factors of magnitude on every board I could find than anything else.
 
 One downside of this heuristic is the abysmal computational overhead. My manhattan distance heuristic takes O(N^4) operations, where N is the length or width of the board. The heuristic performed quite well on boards under 8x8, but past this point the heuristic slowed down the search considerably.
+
+Symmetry Check
+--------------
+I also implemented another form of graph search that checks for symmetrical board configurations, and adds those to the visited list too. The symmetry check helps prune the search tree of duplicate branches that are merely a rotation of another a branch.
+
+Over all, I was enormously impressed by huge efficiency boost that was granted by checking for symmetrical branches. On [the provided search board](/input_files/ortho.txt), every tested search strategy and heuristic performed vastly better with symmetry checking than with normal tree search. Symmetry checking is especially effective in puzzles that posses vertical *and* horizontal symmetry, as they can take use of all 3 'reflections' to prune their search tree.
+
+Of course, duplication checking has its downfalls. The process of creating the new reflecting boards is a computationally non-trivial operation. Perhaps even more damningly, using reflection checking will quadruple the size of the visited list. That being said, I have found the use of symmetry-checking has actually *saved* computational power and memory. The significant exponential gains caused by pruning even a single tree branch make symmetry checking ultimately worth it in cases where board configurations allow symmetry, [this puzzle](/input_file/size5.txt) being such an example.
 
 
 Sample Output

@@ -28,9 +28,10 @@ class DepthFirstSearch:
 
 
 class BreadthFirstSearch:
-    def __init__(self, start, check_duplicates):
+    def __init__(self, start, check_duplicates, check_symmetrical=False):
         self.start = start
         self.check_duplicates = check_duplicates
+        self.check_symmetrical = check_symmetrical
         self.visited = []
         self.nodes_visited = 0
         self.space = 0
@@ -47,7 +48,10 @@ class BreadthFirstSearch:
                 if self.check_duplicates and board in self.visited:
                     continue
                 elif self.check_duplicates:
-                    self.visited += [board] + board.get_symmetrically_equivalent_boards()
+                    self.visited += [board]
+
+                    if self.check_symmetrical:
+                        self.visited += board.get_symmetrically_equivalent_boards()
 
                 if board.is_goal():
                     yield path + [move]
@@ -56,10 +60,11 @@ class BreadthFirstSearch:
 
 
 class AStar:
-    def __init__(self, start, heuristic, check_duplicates):
+    def __init__(self, start, heuristic, check_duplicates, check_symmetrical=False):
         self.start = start
         self.heuristic = heuristic
         self.check_duplicates = check_duplicates
+        self.check_symmetrical = check_symmetrical
         self.visited = []
         self.nodes_visited = 0
         self.space = 0
@@ -79,7 +84,10 @@ class AStar:
                 if self.check_duplicates and board in self.visited:
                     continue
                 elif self.check_duplicates:
-                    self.visited += [board] + board.get_symmetrically_equivalent_boards()
+                    self.visited += [board]
+
+                    if self.check_symmetrical:
+                        self.visited += board.get_symmetrically_equivalent_boards()
 
                 pq.put((board, path + [move]))
 
@@ -121,11 +129,11 @@ class IterativeDeepeningAStar:
 
 def main():
     start_board = Board.board_from_file(sys.argv[1])
-    tree_or_graph = sys.argv[2]
+    duplication_checks = sys.argv[2]
     method = sys.argv[3]
     heuristic = ''
-
-    check_duplicates = 'graph' in tree_or_graph
+    check_duplicates = 'graph' in duplication_checks
+    check_symmetrical = 'symmetry' in duplication_checks
 
     if 'star' in method:
         heuristic = sys.argv[4]
@@ -151,14 +159,14 @@ def main():
             path = None
 
     elif method == 'bfs':
-        seeker = BreadthFirstSearch(start_board, check_duplicates)
+        seeker = BreadthFirstSearch(start_board, check_duplicates, check_symmetrical)
         try:
             path = next(seeker.search())
         except StopIteration:
             path = None
 
     elif method == 'astar':
-        seeker = AStar(start_board, heuristic, check_duplicates)
+        seeker = AStar(start_board, heuristic, check_duplicates, check_symmetrical)
         try:
             path = next(seeker.search())
         except StopIteration:
@@ -190,7 +198,7 @@ def main():
     print('Nodes Visited:', seeker.nodes_visited)
     print('Space: {} nodes'.format(seeker.space))
 
-    if hasattr(seeker, 'visited') and 'graph' in tree_or_graph:
+    if hasattr(seeker, 'visited') and ('graph' in duplication_checks or 'symmetry' in duplication_checks):
         print('Visited Size:', len(seeker.visited))
 
     print("-" * 30)

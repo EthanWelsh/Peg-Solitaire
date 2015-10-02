@@ -23,13 +23,11 @@ I also implemented another form of graph search that checks for symmetrical boar
 
 Over all, I was enormously impressed by huge efficiency boost that was granted by checking for symmetrical branches. On [the provided search board](/input_files/ortho.txt), every tested search strategy and heuristic performed vastly better with symmetry checking than with normal tree search. Symmetry checking is especially effective in puzzles that posses vertical *and* horizontal symmetry, as they can take use of all 3 'reflections' to prune their search tree.
 
-Of course, duplication checking has its downfalls. The process of creating the new reflecting boards is a computationally non-trivial operation. Perhaps even more damningly, using reflection checking will quadruple the size of the visited list. That being said, I have found the use of symmetry-checking has actually *saved* computational power and memory. The significant exponential gains caused by pruning even a single tree branch make symmetry checking ultimately worth it in cases where board configurations allow symmetry, [this puzzle](/input_file/size5.txt) being such an example.
-
+Of course, duplication checking has its downfalls. The process of creating the new reflecting boards is a computationally non-trivial operation. Perhaps even more damningly, using reflection checking will cause 4 entries on visited list for every node visited. That being said, I have found the use of symmetry-checking did not significantly increase the size of the visited list. On the above mentioned board, the search strategies yielded an average of a 2% increase in the size of the visited list, but for a tradeoff of an over 300% decrease in computational time over the graph-search alternative.
 
 Sample Output
 =============
 ```
-/Library/Frameworks/Python.framework/Versions/3.4/bin/python3.4 /Users/welshej/Desktop/CS1571/HW0/Peg-Solitaire/sample_run.py input_files/ortho.txt symmetry bfs
 ------------------------------
 Search: tree-search on dfs
 Input File: input_files/ortho.txt
@@ -232,10 +230,10 @@ Input File: input_files/ortho.txt
 (0, 2) --> (2, 2)
 (1, 3) --> (3, 1)
 (4, 2) --> (2, 0)
-Duration: 0.2618 seconds
-Nodes Visited: 50
-Space: 28 nodes
-Visited Size: 76
+Duration: 0.1688 seconds
+Nodes Visited: 24
+Space: 33 nodes
+Visited Size: 55
 ------------------------------
 ------------------------------
 Search: symmetry on astar man
@@ -251,10 +249,10 @@ Input File: input_files/ortho.txt
 (0, 2) --> (2, 2)
 (1, 3) --> (3, 1)
 (4, 2) --> (2, 0)
-Duration: 0.2776 seconds
-Nodes Visited: 41
-Space: 24 nodes
-Visited Size: 248
+Duration: 0.1817 seconds
+Nodes Visited: 23
+Space: 28 nodes
+Visited Size: 196
 ------------------------------
 ------------------------------
 Search: tree-search on idastar min_moves

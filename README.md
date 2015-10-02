@@ -29,8 +29,9 @@ Of course, duplication checking has its downfalls. The process of creating the n
 Sample Output
 =============
 ```
+/Library/Frameworks/Python.framework/Versions/3.4/bin/python3.4 /Users/welshej/Desktop/CS1571/HW0/Peg-Solitaire/sample_run.py input_files/ortho.txt symmetry bfs
 ------------------------------
-Search: tree-search on dfs 
+Search: tree-search on dfs
 Input File: input_files/ortho.txt
 (0, 2) --> (2, 2)
 (2, 4) --> (0, 2)
@@ -43,7 +44,7 @@ Input File: input_files/ortho.txt
 (2, 0) --> (2, 2)
 (3, 1) --> (1, 3)
 (0, 2) --> (2, 4)
-Duration: 0.0403 seconds
+Duration: 0.0650 seconds
 Nodes Visited: 33
 Space: 12 nodes
 ------------------------------
@@ -61,7 +62,7 @@ Input File: input_files/ortho.txt
 (2, 0) --> (2, 2)
 (3, 1) --> (1, 3)
 (0, 2) --> (2, 4)
-Duration: 333.4521 seconds
+Duration: 331.4075 seconds
 Nodes Visited: 167668
 Space: 88392 nodes
 ------------------------------
@@ -79,10 +80,29 @@ Input File: input_files/ortho.txt
 (2, 0) --> (2, 2)
 (3, 1) --> (1, 3)
 (0, 2) --> (2, 4)
-Duration: 78.4520 seconds
+Duration: 70.2885 seconds
 Nodes Visited: 2303
 Space: 721 nodes
 Visited Size: 2339
+------------------------------
+------------------------------
+Search: symmetry on bfs
+Input File: input_files/ortho.txt
+(0, 2) --> (2, 2)
+(2, 4) --> (0, 2)
+(3, 2) --> (1, 2)
+(3, 3) --> (1, 3)
+(0, 2) --> (2, 2)
+(2, 0) --> (0, 2)
+(4, 2) --> (2, 0)
+(1, 3) --> (3, 1)
+(2, 0) --> (2, 2)
+(3, 1) --> (1, 3)
+(0, 2) --> (2, 4)
+Duration: 23.5259 seconds
+Nodes Visited: 585
+Space: 195 nodes
+Visited Size: 2372
 ------------------------------
 ------------------------------
 Search: graph-search on astar max_movable_pegs
@@ -98,10 +118,29 @@ Input File: input_files/ortho.txt
 (4, 2) --> (2, 0)
 (2, 0) --> (0, 2)
 (0, 2) --> (2, 4)
-Duration: 65.5935 seconds
+Duration: 61.0204 seconds
 Nodes Visited: 2225
 Space: 274 nodes
 Visited Size: 2343
+------------------------------
+------------------------------
+Search: symmetry on astar max_movable_pegs
+Input File: input_files/ortho.txt
+(0, 2) --> (2, 2)
+(3, 2) --> (1, 2)
+(2, 4) --> (0, 2)
+(3, 3) --> (1, 3)
+(0, 2) --> (2, 2)
+(1, 1) --> (3, 3)
+(2, 0) --> (2, 2)
+(3, 3) --> (1, 1)
+(4, 2) --> (2, 0)
+(2, 0) --> (0, 2)
+(0, 2) --> (2, 4)
+Duration: 19.4585 seconds
+Nodes Visited: 582
+Space: 73 nodes
+Visited Size: 2376
 ------------------------------
 ------------------------------
 Search: graph-search on astar max_moves
@@ -117,10 +156,29 @@ Input File: input_files/ortho.txt
 (3, 1) --> (1, 3)
 (0, 2) --> (2, 4)
 (2, 4) --> (2, 2)
-Duration: 65.7972 seconds
+Duration: 59.7559 seconds
 Nodes Visited: 2218
 Space: 532 nodes
 Visited Size: 2343
+------------------------------
+------------------------------
+Search: symmetry on astar max_moves
+Input File: input_files/ortho.txt
+(0, 2) --> (2, 2)
+(2, 0) --> (0, 2)
+(3, 2) --> (1, 2)
+(2, 4) --> (2, 2)
+(0, 2) --> (2, 4)
+(2, 1) --> (2, 3)
+(2, 4) --> (2, 2)
+(4, 2) --> (2, 0)
+(3, 3) --> (1, 1)
+(2, 0) --> (0, 2)
+(0, 2) --> (2, 2)
+Duration: 20.0654 seconds
+Nodes Visited: 576
+Space: 282 nodes
+Visited Size: 2376
 ------------------------------
 ------------------------------
 Search: graph-search on astar min_moves
@@ -136,28 +194,29 @@ Input File: input_files/ortho.txt
 (3, 3) --> (1, 1)
 (4, 2) --> (2, 0)
 (2, 0) --> (0, 2)
-Duration: 68.1269 seconds
+Duration: 61.1046 seconds
 Nodes Visited: 2218
 Space: 954 nodes
 Visited Size: 2343
 ------------------------------
 ------------------------------
-Search: tree-search on idastar min_moves
+Search: symmetry on astar min_moves
 Input File: input_files/ortho.txt
 (0, 2) --> (2, 2)
 (2, 4) --> (0, 2)
-(3, 2) --> (1, 2)
-(3, 3) --> (1, 3)
-(0, 2) --> (2, 2)
-(2, 0) --> (0, 2)
-(4, 2) --> (2, 0)
-(1, 3) --> (3, 1)
-(2, 0) --> (2, 2)
 (3, 1) --> (1, 3)
-(0, 2) --> (2, 4)
-Duration: 1658.5877 seconds
-Nodes Visited: 609858
-Space: 11 nodes
+(2, 0) --> (2, 2)
+(1, 3) --> (3, 1)
+(4, 2) --> (2, 2)
+(0, 2) --> (2, 0)
+(2, 0) --> (4, 2)
+(3, 3) --> (1, 3)
+(1, 3) --> (3, 1)
+(4, 2) --> (2, 0)
+Duration: 21.1977 seconds
+Nodes Visited: 572
+Space: 298 nodes
+Visited Size: 2376
 ------------------------------
 ------------------------------
 Search: graph-search on astar man
@@ -173,9 +232,46 @@ Input File: input_files/ortho.txt
 (0, 2) --> (2, 2)
 (1, 3) --> (3, 1)
 (4, 2) --> (2, 0)
-Duration: 0.2491 seconds
+Duration: 0.2618 seconds
 Nodes Visited: 50
 Space: 28 nodes
 Visited Size: 76
+------------------------------
+------------------------------
+Search: symmetry on astar man
+Input File: input_files/ortho.txt
+(0, 2) --> (2, 2)
+(2, 4) --> (0, 2)
+(4, 2) --> (2, 4)
+(2, 0) --> (4, 2)
+(1, 1) --> (3, 1)
+(3, 1) --> (1, 3)
+(2, 4) --> (2, 2)
+(3, 2) --> (1, 2)
+(0, 2) --> (2, 2)
+(1, 3) --> (3, 1)
+(4, 2) --> (2, 0)
+Duration: 0.2776 seconds
+Nodes Visited: 41
+Space: 24 nodes
+Visited Size: 248
+------------------------------
+------------------------------
+Search: tree-search on idastar min_moves
+Input File: input_files/ortho.txt
+(0, 2) --> (2, 2)
+(2, 4) --> (0, 2)
+(3, 2) --> (1, 2)
+(3, 3) --> (1, 3)
+(0, 2) --> (2, 2)
+(2, 0) --> (0, 2)
+(4, 2) --> (2, 0)
+(1, 3) --> (3, 1)
+(2, 0) --> (2, 2)
+(3, 1) --> (1, 3)
+(0, 2) --> (2, 4)
+Duration: 2239.1996 seconds
+Nodes Visited: 609858
+Space: 11 nodes
 ------------------------------
 ```

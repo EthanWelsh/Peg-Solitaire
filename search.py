@@ -132,7 +132,7 @@ def main():
     duplication_checks = sys.argv[2]
     method = sys.argv[3]
     heuristic = ''
-    check_duplicates = 'graph' in duplication_checks
+    check_duplicates = 'graph' in duplication_checks or 'symmetry' in duplication_checks
     check_symmetrical = 'symmetry' in duplication_checks
 
     if 'star' in method:

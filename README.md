@@ -230,10 +230,10 @@ Input File: input_files/ortho.txt
 (0, 2) --> (2, 2)
 (1, 3) --> (3, 1)
 (4, 2) --> (2, 0)
-Duration: 0.2618 seconds
-Nodes Visited: 50
-Space: 28 nodes
-Visited Size: 76
+Duration: 0.1688 seconds
+Nodes Visited: 24
+Space: 33 nodes
+Visited Size: 55
 ------------------------------
 ------------------------------
 Search: symmetry on astar man
@@ -249,10 +249,10 @@ Input File: input_files/ortho.txt
 (0, 2) --> (2, 2)
 (1, 3) --> (3, 1)
 (4, 2) --> (2, 0)
-Duration: 0.2776 seconds
-Nodes Visited: 41
-Space: 24 nodes
-Visited Size: 248
+Duration: 0.1817 seconds
+Nodes Visited: 23
+Space: 28 nodes
+Visited Size: 196
 ------------------------------
 ------------------------------
 Search: tree-search on idastar min_moves

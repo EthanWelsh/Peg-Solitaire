@@ -49,11 +49,7 @@ def manhattan_distance(board):
                     for cc in range(board.size):
                         if board.board[rr, cc] == Spot.PEG:
                             man += abs(r - rr) + abs(c - cc)
-    return man / number_of_pegs
-
-
-def pagoda_value(board):
-    pass
+    return man / (2 * number_of_pegs)
 
 
 def isolated_pegs(board):

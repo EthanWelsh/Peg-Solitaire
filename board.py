@@ -53,6 +53,9 @@ class Board:
         new_board = Board(np.copy(other.board), other.directions)
         return new_board
 
+    def get_symmetrically_equivalent_boards(self):
+        return [Board(np.rot90(np.copy(self.board), i), self.directions) for i in range(1, 4)]
+
     def successors(self):
         moves = self.get_possible_moves()
         for move in moves:

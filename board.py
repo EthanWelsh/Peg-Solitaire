@@ -120,7 +120,7 @@ class Board:
         new_board = Board.board_from_board(self)
 
         # Calculate the coordinates of the pixel that is between the source and destination
-        hop = tuple(np.divide(np.add(source, destination), (2, 2)))
+        hop = tuple(np.array(np.divide(np.add(source, destination), (2, 2)), dtype=np.int32))
 
         new_board.board[source] = Spot.FREE
         new_board.board[destination] = Spot.PEG

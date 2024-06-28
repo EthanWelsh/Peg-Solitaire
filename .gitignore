@@ -56,3 +56,10 @@ docs/_build/
 # PyBuilder
 target/
 .idea/
+
+#vscode
+.vscode/
+
+# result files
+output_files/
+animations/

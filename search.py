@@ -184,24 +184,29 @@ def main():
 
     end = time.time()
 
-    print("-" * 30)
-    print('Search:', sys.argv[2], 'on', sys.argv[3], sys.argv[4] if len(sys.argv) > 4 else '')
-    print('Input File:', sys.argv[1])
+    output_file = 'output_files/' + sys.argv[1].split('/')[-1]
 
-    if path:
-        for step in path:
-            print(step[0], '-->', step[1])
-    else:
-        print("No solution found!")
+    with open(output_file, 'w') as f:
+        print("-" * 30, file=f)
+        print('Search:', sys.argv[2], 'on', sys.argv[3], sys.argv[4] if len(sys.argv) > 4 else '', file=f)
+        print('Input File:', sys.argv[1], file=f)
 
-    print('Duration: {0:.4f} seconds'.format(end - start))
-    print('Nodes Visited:', seeker.nodes_visited)
-    print('Space: {} nodes'.format(seeker.space))
+        if path:
+            print('Steps:', len(path), file=f)
+            for step in path:
+                print(step[0], '-->', step[1], file=f)
+        else:
+            print("No solution found!", file=f)
 
-    if hasattr(seeker, 'visited') and ('graph' in duplication_checks or 'symmetry' in duplication_checks):
-        print('Visited Size:', len(seeker.visited))
+        print('Duration: {0:.4f} seconds'.format(end - start), file=f)
+        print('Nodes Visited:', seeker.nodes_visited, file=f)
+        print('Space: {} nodes'.format(seeker.space), file=f)
 
-    print("-" * 30)
+        if hasattr(seeker, 'visited') and ('graph' in duplication_checks or 'symmetry' in duplication_checks):
+            print('Visited Size:', len(seeker.visited), file=f)
+
+        print("-" * 30, file=f)
+        print("Output has been saved to" + output_file)
 
 
 if __name__ == '__main__':
